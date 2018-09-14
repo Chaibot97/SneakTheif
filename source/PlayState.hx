@@ -17,6 +17,14 @@ import flixel.FlxCamera;
 
 using flixel.util.FlxSpriteUtil;
 
+import openfl.filters.BitmapFilter;
+import openfl.filters.BlurFilter;
+import openfl.filters.ColorMatrixFilter;
+
+import openfl8.*;
+import openfl.filters.ShaderFilter;
+import openfl.Lib;
+
 class PlayState extends FlxState
 {
 	var _player:Player;
@@ -32,7 +40,7 @@ class PlayState extends FlxState
 	var _won:Bool;
 	var _paused:Bool;
 	var infoText:FlxText;
-	inline static var INFO:String = "press j to examine";
+	var filters:Array<BitmapFilter> = [];
 
 	#if mobile
 	public static var virtualPad:FlxVirtualPad;
@@ -44,6 +52,12 @@ class PlayState extends FlxState
 		FlxG.mouse.visible = false;
 		#end
 		
+		filters.push(new ShaderFilter(new Scanline()));
+		FlxG.camera.setFilters(filters);
+		FlxG.game.setFilters(filters);
+		FlxG.game.filtersEnabled = false;
+		FlxG.camera.filtersEnabled = false;
+
 		_map = new FlxOgmoLoader(AssetPaths.room_001__oel);
 		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
 		_mWalls.follow();
@@ -73,7 +87,7 @@ class PlayState extends FlxState
 		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		
-		infoText = new FlxText(2, 0, -1, INFO,7);
+		infoText = new FlxText(2, 0, -1, "press j to examine",7);
 		infoText.y = FlxG.height - infoText.height;
 		infoText.x = FlxG.width - infoText.width;
 
@@ -115,6 +129,12 @@ class PlayState extends FlxState
 			FlxG.collide(_player, _mWalls);
 			FlxG.overlap(_player, _grpEntities, playerTouchEntity);
 		}
+		if(FlxG.keys.anyJustReleased([K])){
+			lightsOn();
+		}
+		if(FlxG.keys.anyJustReleased([L])){
+			lightsOff();
+		}
 	}
 
 	
@@ -130,5 +150,15 @@ class PlayState extends FlxState
 				C.kill();
 			}
 		}
+	}
+
+	function lightsOn():Void
+	{
+		FlxG.camera.filtersEnabled = false;
+	}
+
+	function lightsOff():Void
+	{
+		FlxG.camera.filtersEnabled = true;
 	}
 }
