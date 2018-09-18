@@ -11,9 +11,11 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
+import flixel.FlxSprite;
 
 import flixel.text.FlxText;
 import flixel.FlxCamera;
+
 
 using flixel.util.FlxSpriteUtil;
 
@@ -30,6 +32,8 @@ class PlayState extends FlxState
 	var _player:Player;
 	var _map:FlxOgmoLoader;
 	var _mWalls:FlxTilemap;
+	var _backpack:Inventory; //Inventory
+
 	var _grpEntities:FlxTypedGroup<Entity>;
 	// var _hud:HUD;
 	var _money:Int = 0;
@@ -73,7 +77,7 @@ class PlayState extends FlxState
 		_map.loadEntities(placeEntities, "entities");
 		
 		add(_player);
-		
+		add(_backpack);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		// _hud = new HUD();
@@ -149,6 +153,7 @@ class PlayState extends FlxState
 			infoText.x = P.x +10;
 			infoText.visible=true;
 			if(FlxG.keys.anyJustReleased([J])){
+				_backpack.addItem(C); //Add item to backpack/inventory when clicked. 
 				C.kill();
 			}
 		}
