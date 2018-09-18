@@ -32,10 +32,9 @@ class PlayState extends FlxState
 	var _player:Player;
 	var _map:FlxOgmoLoader;
 	var _mWalls:FlxTilemap;
-	var _backpack:Inventory; //Inventory
 
 	var _grpEntities:FlxTypedGroup<Entity>;
-	// var _hud:HUD;
+	var _hud:HUD;
 	var _money:Int = 0;
 	var _health:Int = 3;
 	var _inCombat:Bool = false;
@@ -55,7 +54,7 @@ class PlayState extends FlxState
 		#if FLX_MOUSE
 		FlxG.mouse.visible = false;
 		#end
-		
+
 		filters.push(new ShaderFilter(new Scanline()));
 		FlxG.camera.setFilters(filters);
 		FlxG.game.setFilters(filters);
@@ -77,11 +76,10 @@ class PlayState extends FlxState
 		_map.loadEntities(placeEntities, "entities");
 		
 		add(_player);
-		add(_backpack);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
-		// _hud = new HUD();
-		// add(_hud);
+		_hud = new HUD();
+		add(_hud);
 		
 		// _combatHud = new CombatHUD();
 		// add(_combatHud);
@@ -153,8 +151,8 @@ class PlayState extends FlxState
 			infoText.x = P.x +10;
 			infoText.visible=true;
 			if(FlxG.keys.anyJustReleased([J])){
-				_backpack.addItem(C); //Add item to backpack/inventory when clicked. 
 				C.kill();
+				_hud.updateHUD();
 			}
 		}
 	}
