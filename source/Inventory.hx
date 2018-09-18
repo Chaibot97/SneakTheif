@@ -22,12 +22,14 @@ class Inventory extends FlxSpriteButton{
     //Adds Item to inventory
     public function addItem(item:Entity){
         _backPack.push(item);
+        item.revive();
     }
 
     //Functionality for clicking inventory button. GOAL: Display all items collected on screen. Allow user to exit Display when ready. 
     private function displayInventory():Void{
-        trace(_backPack.length);
+        trace(_backPack[0]);
         state.add(invUI);
+        state.add(_backPack[0]);
     }
 
 
