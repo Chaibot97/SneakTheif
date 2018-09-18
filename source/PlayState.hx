@@ -41,7 +41,7 @@ class PlayState extends FlxState
 	var _paused:Bool;
 	var infoText:FlxText;
 	var filters:Array<BitmapFilter> = [];
-
+	var _dialog:Dialog=new Dialog();
 	#if mobile
 	public static var virtualPad:FlxVirtualPad;
 	#end
@@ -88,6 +88,8 @@ class PlayState extends FlxState
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		
 		infoText = new FlxText(2, 0, -1, "press j to examine",7);
+		// infoText = new FlxText(2, 0, -1, _dialog.lines.get("window")[0],7);
+
 		infoText.y = FlxG.height - infoText.height;
 		infoText.x = FlxG.width - infoText.width;
 
