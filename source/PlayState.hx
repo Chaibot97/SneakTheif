@@ -38,7 +38,7 @@ class PlayState extends FlxState
 	var _money:Int = 0;
 	var _health:Int = 3;
 	var _inCombat:Bool = false;
-	// var _combatHud:CombatHUD;
+	var _examineHud:ExamineHUD;//aa
 	var _ending:Bool;
 	var _won:Bool;
 	var _paused:Bool;
@@ -81,10 +81,9 @@ class PlayState extends FlxState
 		_hud = new HUD();
 		add(_hud);
 		
-		// _combatHud = new CombatHUD();
-		// add(_combatHud);
+		_examineHud = new ExamineHUD();
+		add(_examineHud);
 		
-		// _sndCoin = FlxG.sound.load(AssetPaths.coin__wav);
 		
 		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
@@ -151,6 +150,7 @@ class PlayState extends FlxState
 			infoText.x = P.x +10;
 			infoText.visible=true;
 			if(FlxG.keys.anyJustReleased([J])){
+				_examineHud.init(_player);
 				C.kill();
 				_hud.updateHUD();
 			}

@@ -20,18 +20,8 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		_sprBack = new FlxSprite().makeGraphic(FlxG.width, 20, FlxColor.BLACK);
 		_sprBack.drawRect(0, 19, FlxG.width, 1, FlxColor.WHITE);
 		
-		_sprHealth = new FlxSprite(4, 4, AssetPaths.health__png);
-		
-		_sprMoney = new FlxSprite(4, 4, AssetPaths.coin__png);
-
-		_txtMoney = new FlxText(0, 2, 0, "0", 8);
 		add(_sprBack);
-		// add(_sprHealth);
-		// add(_sprMoney);
-		//add(_txtMoney);
-		// add(new FlxSprite(4, 4, AssetPaths.coin__png));
-		
-		// HUD elements shouldn't move with the camera
+
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set(0, 0);
