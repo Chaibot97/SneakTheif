@@ -6,11 +6,14 @@ import flixel.tweens.FlxTween;
 
 class Entity extends FlxSprite
 {
-	public function new(X:Float=0, Y:Float=0) 
+	public var _name:String; 
+	public function new(X:Float=0, Y:Float=0, ?name:String = "null") 
 	{
 		super(X, Y);
+		_name = name; 
 		loadGraphic(AssetPaths.coin__png, false, 8, 8);
 	}
+
 	
 	override public function kill():Void 
 	{
