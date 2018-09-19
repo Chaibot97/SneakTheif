@@ -101,6 +101,9 @@ class PlayState extends FlxState
 
 		infoText.setBorderStyle(OUTLINE);
 		infoText.visible=false;
+
+		displayHUD(_hud);//display HUD
+
 		add(infoText);
 
 
@@ -138,7 +141,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-
+		
 		if (_ending)
 		{
 			return;
@@ -185,5 +188,13 @@ class PlayState extends FlxState
 	function lightsOff():Void
 	{
 		FlxG.camera.filtersEnabled = true;
+	}
+
+	function displayHUD(playHUD:HUD):Void{
+		for(entList in playHUD._currentInv){
+			
+			entList.members[0].graphic;
+		}
+		add(playHUD._txtMoney);
 	}
 }

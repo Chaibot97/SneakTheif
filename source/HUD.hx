@@ -13,9 +13,14 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	var _sprHealth:FlxSprite;
 	var _sprMoney:FlxSprite;
 	var coin:Int=0;
-	var _txtMoney:FlxText;
+
+
+	public var _txtMoney:FlxText;
+	//var _newTextMoney:FlxText;
 	var inventoryDataBase:FlxTypedGroup<Entity>; 
-	var _currentInv:Map<Entity, FlxTypedGroup<Entity>>;
+
+	public var _currentInv:Map<String, FlxTypedGroup<Entity>>;
+	public var _hudGraphicList:Map<String, Map<FlxSprite, FlxText>>;
 	public function new() 
 	{
 		super();
@@ -26,12 +31,12 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		
 		_sprMoney = new FlxSprite(4, 4, AssetPaths.coin__png);
 
-		_txtMoney = new FlxText(50, 50, 5, "0", 20);
-		_txtMoney.color = FlxColor.GREEN;
+		_txtMoney = new FlxText(50, 50, 20, "0", 20);
 
 		inventoryDataBase = new FlxTypedGroup<Entity>(); 
 
-		_currentInv = new Map<Entity, FlxTypedGroup<Entity>>(); 
+		_currentInv = new Map<String, FlxTypedGroup<Entity>>(); //Running Amount of Total inventory. Used to give a count for each object type
+		_hudGraphicList = new Map<String, FlxSprite>(); 
 		//add(_sprBack);
 		// add(_sprHealth);
 		// add(_sprMoney);
@@ -50,7 +55,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		inventoryDataBase = data; 
 		for(i in 0...inventoryDataBase.length){
 			var tempEnts:FlxTypedGroup<Entity> = new FlxTypedGroup<Entity>(); 
-			_currentInv.set(inventoryDataBase.members[i], tempEnts);
+			_currentInv.set(inventoryDataBase.members[i]._name, tempEnts);
 		}
 		for(object in _currentInv){
 			trace(object);
@@ -62,18 +67,21 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	{
 		if(!inBag(newItem)){
 			var tmp=new FlxSprite(4+8*coin, 4, AssetPaths.coin__png);
-			add(_txtMoney);
-			add(tmp);
+			_hudGraphicList[newItem._name] = tmp; 
+			//add(tmp);
 			tmp.scrollFactor.set(0, 0);
+			_txtMoney.scrollFactor.set(0,0);
 		}
 		else{
 
+			trace(newItem._name);
+			_txtMoney.text = "" + coin;
 		}
 
 
 		for(type in _currentInv.keys()){
-			if(type._name == newItem._name){
-				trace(type._name);
+			if(type == newItem._name){
+				trace(type);
 				_currentInv[type].add(newItem);
 			}
 		}
@@ -91,7 +99,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 
 	public function inBag(tempEnt:Entity):Bool{
 		for(type in _currentInv.keys()){
-			if(type._name == tempEnt._name){
+			if(type == tempEnt._name){
 				if(_currentInv[type].length == 0){
 					return false;
 				}
