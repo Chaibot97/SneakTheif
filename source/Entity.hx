@@ -11,7 +11,7 @@ class Entity extends FlxSprite
 	public var _eType:String; 
 	public function new(X:Float=0, Y:Float=0, W:Int=0, H:Int=0, ?eType:String, ?name:String = "null") 
 	{
-		super(X, Y, spriteGraph);
+		super(X, Y);
 		_name = name; 
 		_eType=eType;
 		this.immovable=true;
