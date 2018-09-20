@@ -27,25 +27,34 @@ import openfl8.*;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
 
+
+import flixel.addons.editors.tiled.TiledMap;
+
 class PlayState extends FlxState
 {
 	var _player:Player;
 	var _map:FlxOgmoLoader;
+	var _mFloor:FlxTilemap;
 	var _mWalls:FlxTilemap;
 
 	var _grpEntities:FlxTypedGroup<Entity>;
+	var _grpCEntities:FlxTypedGroup<Entity>;
+	var _grpHitBoxes:FlxTypedGroup<Entity>;
+
+	var _uniqueEntities:FlxTypedGroup<Entity>; //List of unique interactable objects
 
 	var _hud:HUD;
 	var _money:Int = 0;
 	var _health:Int = 3;
 	var _inCombat:Bool = false;
-	// var _combatHud:CombatHUD;
+	var _examineHud:ExamineHUD;//aa
 	var _ending:Bool;
 	var _won:Bool;
 	var _paused:Bool;
 	var infoText:FlxText;
 	var filters:Array<BitmapFilter> = [];
 	var _dialog:Dialog=new Dialog();
+	var _exed:Bool=false;
 	#if mobile
 	public static var virtualPad:FlxVirtualPad;
 	#end
@@ -62,15 +71,23 @@ class PlayState extends FlxState
 		FlxG.game.filtersEnabled = false;
 		FlxG.camera.filtersEnabled = false;
 
-		_map = new FlxOgmoLoader(AssetPaths.room_001__oel);
-		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
-		_mWalls.follow();
-		_mWalls.setTileProperties(1, FlxObject.NONE);
-		_mWalls.setTileProperties(2, FlxObject.ANY);
+		_map = new FlxOgmoLoader(AssetPaths.livingRoom__oel);
+		_mFloor = _map.loadTilemap(AssetPaths.LivingRoomFloor__png, 16, 16, "floor");
+		_mFloor.follow();
+		_mFloor.setTileProperties(1, FlxObject.NONE);
+		_mFloor.setTileProperties(2, FlxObject.ANY);
+		add(_mFloor);
+		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
+
 		add(_mWalls);
 		
 		_grpEntities = new FlxTypedGroup<Entity>();
 		add(_grpEntities);
+		_grpCEntities = new FlxTypedGroup<Entity>();
+		add(_grpCEntities);
+		_grpHitBoxes = new FlxTypedGroup<Entity>();
+		add(_grpHitBoxes);
+
 		
 		_player = new Player();
 
@@ -79,12 +96,12 @@ class PlayState extends FlxState
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
+		// _hud.addDataBase(_uniqueEntities);
 		add(_hud);
 		
-		// _combatHud = new CombatHUD();
-		// add(_combatHud);
+		_examineHud = new ExamineHUD();
+		add(_examineHud);
 		
-		// _sndCoin = FlxG.sound.load(AssetPaths.coin__wav);
 		
 		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
@@ -111,17 +128,25 @@ class PlayState extends FlxState
 	{
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
-		
-		var tempEnt:Entity = new Entity(x,y, entityName); 
+		var w:Int = Std.parseInt(entityData.get("w"));
+		var h:Int = Std.parseInt(entityData.get("h"));
+		var etype:String =entityData.get("etype");
+		var collide:String =entityData.get("collide");
+
+		// var tempEnt:Entity = new Entity(x,y, etype,entityName); 
 
 		if (entityName == "player")
 		{
 			_player.x = x;
 			_player.y = y;
 		}
-		else if (entityName == "coin")
+		else if(collide=="t")
 		{
-			_grpEntities.add(new Entity(x + 4, y + 4, AssetPaths.coin__png, entityName));
+			_grpCEntities.add(new Entity(x, y,w,h, etype,entityName));
+			_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
+		}else
+		{
+			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
 		}
 	}
 
@@ -139,8 +164,15 @@ class PlayState extends FlxState
 		if (!_inCombat)
 		{
 			infoText.visible=false;
-			FlxG.collide(_player, _mWalls);
-			FlxG.overlap(_player, _grpEntities, playerTouchEntity);
+			FlxG.collide(_player, _mFloor);
+			var flag=true;
+			FlxG.collide(_player, _grpCEntities);
+			if(FlxG.overlap(_player, _grpEntities, playerTouchEntity))flag=false;
+			if(FlxG.overlap(_player, _grpHitBoxes, playerTouchEntity))flag=false;
+			if(flag){
+				_exed=false;
+			}
+			
 		}
 		if(FlxG.keys.anyJustReleased([K])){
 			lightsOn();
@@ -150,6 +182,10 @@ class PlayState extends FlxState
 		}
 		displayHUD(_hud);
 		
+		if(FlxG.keys.anyJustReleased([T])){
+			trace(_player.x);
+			trace(_player.y);
+		}
 	}
 
 	
@@ -158,13 +194,20 @@ class PlayState extends FlxState
 	{
 		if (P.alive && P.exists && C.alive && C.exists)
 		{
-			infoText.y = P.y-15 ;
-			infoText.x = P.x +10;
-			infoText.visible=true;
-			if(FlxG.keys.anyJustReleased([J])){
-				
-				_hud.updateHUD(C);
+			infoText.y = P.y-20 ;
+			infoText.x = P.x +12;
+			if(!_exed)infoText.visible=true;
+			if(C._eType=="hitbox"){
+				_grpCEntities.forEach(function(spr:Entity){
+					if(spr._name==C._name) C=spr;
+				});
+			}
+			if(FlxG.keys.anyJustReleased([J])&&!_exed){
+				_examineHud.init(P,C);
 				C.kill();
+				infoText.visible=false;
+				_exed=true;
+				trace(C._name);
 				
 			}
 		}
