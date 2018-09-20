@@ -49,23 +49,21 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 
-		lockKeys = new Entity(10, 30, AssetPaths.health__png, true);
-		lkText = new FlxText(20, 22, 40, "0" , 8);
-		lkText.scrollFactor.set(0, 0);
+		lockKeys = new Entity(10, 20, AssetPaths.health__png, true);
+		lkText = new FlxText(20, 10, 40, "0" , 8);
 		lkList = new FlxTypedGroup<Entity>(); 
 
-		cipherScraps = new Entity(25,30, AssetPaths.GD_Paper__png, true);
-		csText = new FlxText(35, 22, 40, "0" , 8);
-		csText.scrollFactor.set(0, 0);
+		cipherScraps = new Entity(30,20, AssetPaths.GD_Paper__png, true);
+		csText = new FlxText(35, 10, 40, "0" , 8);
 		csList = new FlxTypedGroup<Entity>(); 
 
-		numberScraps = new Entity(45,30, AssetPaths.coin__png, true);
-		nsText = new FlxText(55, 22, 40, "0", 8);
-		nsText.scrollFactor.set(0, 0);
+		numberScraps = new Entity(45,20, AssetPaths.coin__png, true);
+		nsText = new FlxText(55, 10, 40, "0", 8);
 		nsList = new FlxTypedGroup<Entity>(); 
 
-
-		backGraphic = new FlxSprite().makeGraphic(FlxG.width, 60, FlxColor.BLUE);
+		var bgclr=FlxColor.CYAN;
+		bgclr.alphaFloat=0.2;
+		backGraphic = new FlxSprite().makeGraphic(FlxG.width, 30,bgclr) ;
 		backGraphic.x = 0; 
 		backGraphic.y = 0; 
 

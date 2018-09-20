@@ -38,7 +38,6 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomPottedPlant__png, false,W,H);
 			}else if(name=="lamp"){
 				loadGraphic(AssetPaths.LivingRoomStandingLamp__png, false,W,H);
-			}else if(_forHUD)
 			}else if(name=="couchm"){
 				loadGraphic(AssetPaths.LivingRoomLargeCouch__png, false,W,H);
 			}else if(name=="couchl"){
@@ -47,6 +46,8 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomSmallCouchRight__png, false,W,H);
 			}else if(name=="tv"){
 				loadGraphic(AssetPaths.LivingRoomTV__png, false,W,H);
+			}else if(_forHUD){
+				loadGraphic(hudGraphicAsset, false, 8, 8); 
 			}else
 			{
 				loadGraphic(hudGraphicAsset, false, 8, 8);

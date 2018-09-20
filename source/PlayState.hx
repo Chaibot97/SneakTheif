@@ -96,8 +96,7 @@ class PlayState extends FlxState
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
-		// _hud.addDataBase(_uniqueEntities);
-		add(_hud);
+		// add(_hud);
 		
 		_examineHud = new ExamineHUD();
 		add(_examineHud);
@@ -115,7 +114,6 @@ class PlayState extends FlxState
 		infoText.setBorderStyle(OUTLINE);
 		infoText.visible=false;
 
-		displayHUD(_hud);//display HUD
 
 		add(infoText);
 		_map.loadEntities(placeEntities, "entities");
