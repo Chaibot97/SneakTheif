@@ -186,6 +186,7 @@ class PlayState extends FlxState
 			trace(_player.x);
 			trace(_player.y);
 		}
+		_hud.checkKeyPress(_examineHud, _player);
 	}
 
 	

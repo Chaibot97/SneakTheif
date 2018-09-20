@@ -34,10 +34,11 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	var numberScrapsCount:Int = 0; 
 	var nsText:FlxText;
 	var nsList:FlxTypedGroup<Entity>;
-
+	
 
 	var time:Entity; 
 	var timeText:FlxText; 
+
 
 	public var _txtMoney:FlxText;
 	//var _newTextMoney:FlxText;
@@ -68,6 +69,9 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		backGraphic = new FlxSprite().makeGraphic(FlxG.width, 60, FlxColor.BLUE);
 		backGraphic.x = 0; 
 		backGraphic.y = 0; 
+
+
+		//add(_examineHud);
 
 		this.add(backGraphic);
 		this.add(lkText);
@@ -105,4 +109,26 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		}
 	}
 
+	public function checkKeyPress(_examineHud:ExamineHUD, P:Player):Void{
+		if(FlxG.keys.justPressed.ONE){
+			//Pop up Keys?
+			_examineHud.init(P,lockKeys);
+		}
+		else if(FlxG.keys.justPressed.TWO){
+			//Pop up Cipher scraps
+			_examineHud.init(P,cipherScraps);
+		}
+		else if(FlxG.keys.justPressed.THREE){
+			//Pop up Number Code scraps
+			_examineHud.init(P,numberScraps);
+		}
+	}
+	
+
+	override public function update(elapsed:Float):Void 
+	{
+		
+		super.update(elapsed);
+	
+	}
 }

@@ -151,7 +151,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	override public function update(elapsed:Float):Void 
 	{
-		if(FlxG.keys.anyJustReleased([J])){
+		if(FlxG.keys.anyJustReleased([J,ONE,TWO,THREE])){
 			active = false;
 			visible = false;
 			_player.active=true;
