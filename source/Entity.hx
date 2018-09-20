@@ -1,18 +1,22 @@
 package;
-
 import flixel.FlxSprite;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 using flixel.util.FlxSpriteUtil;
+using flixel.system.FlxAssets;
 
 class Entity extends FlxSprite
 {
 	public var _name:String; 
 	public var _eType:String; 
-	public function new(X:Float=0, Y:Float=0, W:Int=0, H:Int=0, ?eType:String, ?name:String = "null") 
+	public var _forHUD:Bool; 
+	public var hudGraphicAsset:FlxGraphicAsset; 
+	public function new(X:Float=0, Y:Float=0, ?hudGraphic:FlxGraphicAsset = null, ?hudItem:Bool = false, W:Int=0, H:Int=0, ?eType:String, ?name:String = "null") 
 	{
 		super(X, Y);
+		_forHUD = hudItem; 
+		hudGraphicAsset = hudGraphic; 
 		_name = name; 
 		_eType=eType;
 		this.immovable=true;
@@ -34,6 +38,7 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomPottedPlant__png, false,W,H);
 			}else if(name=="lamp"){
 				loadGraphic(AssetPaths.LivingRoomStandingLamp__png, false,W,H);
+			}else if(_forHUD)
 			}else if(name=="couchm"){
 				loadGraphic(AssetPaths.LivingRoomLargeCouch__png, false,W,H);
 			}else if(name=="couchl"){
@@ -44,7 +49,7 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomTV__png, false,W,H);
 			}else
 			{
-				loadGraphic(AssetPaths.coin__png, false, 8, 8);
+				loadGraphic(hudGraphicAsset, false, 8, 8);
 			}
 		}
 	}
@@ -62,4 +67,6 @@ class Entity extends FlxSprite
 	{
 		exists = false;
 	}
+
+
 }

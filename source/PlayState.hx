@@ -91,8 +91,6 @@ class PlayState extends FlxState
 		
 		_player = new Player();
 
-		_uniqueEntities = new FlxTypedGroup<Entity>(); 
-		_map.loadEntities(placeEntities, "entities");
 		
 		add(_player);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
@@ -116,7 +114,11 @@ class PlayState extends FlxState
 
 		infoText.setBorderStyle(OUTLINE);
 		infoText.visible=false;
+
+		displayHUD(_hud);//display HUD
+
 		add(infoText);
+		_map.loadEntities(placeEntities, "entities");
 
 
 		super.create();
@@ -146,16 +148,6 @@ class PlayState extends FlxState
 		{
 			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
 		}
-
-
-		// var hi:Bool = false; 
-		// for(i in 0..._uniqueEntities.length){
-		// 	if(_uniqueEntities.members[i]._name == tempEnt._name){
-		// 		return; 
-		// 	}
-			
-		// }
-		// _uniqueEntities.add(tempEnt);
 	}
 
 
@@ -163,7 +155,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-
+		
 		if (_ending)
 		{
 			return;
@@ -188,6 +180,8 @@ class PlayState extends FlxState
 		if(FlxG.keys.anyJustReleased([L])){
 			lightsOff();
 		}
+		displayHUD(_hud);
+		
 		if(FlxG.keys.anyJustReleased([T])){
 			trace(_player.x);
 			trace(_player.y);
@@ -237,5 +231,10 @@ class PlayState extends FlxState
 	function lightsOff():Void
 	{
 		FlxG.camera.filtersEnabled = true;
+	}
+
+	function displayHUD(playHUD:HUD):Void{
+		playHUD.forEach(this.add);
+		
 	}
 }
