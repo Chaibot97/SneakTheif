@@ -76,7 +76,6 @@ class PlayState extends FlxState
 		_mFloor.setTileProperties(2, FlxObject.ANY);
 		add(_mFloor);
 		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
-		_mWalls.follow();
 
 		add(_mWalls);
 		
@@ -84,6 +83,7 @@ class PlayState extends FlxState
 		add(_grpEntities);
 		_grpCEntities = new FlxTypedGroup<Entity>();
 		add(_grpCEntities);
+
 		
 		_player = new Player();
 
@@ -165,11 +165,12 @@ class PlayState extends FlxState
 		
 		if (!_inCombat)
 		{
-			
+			infoText.visible=false;
 			FlxG.collide(_player, _mFloor);
-			if(!FlxG.overlap(_player, _grpEntities, playerTouchEntity)||
-			!FlxG.collide(_player, _grpCEntities, playerTouchEntity)){
-				infoText.visible=false;
+			var flag=true;
+			if(FlxG.overlap(_player, _grpEntities, playerTouchEntity))flag=false;
+			if(FlxG.collide(_player, _grpCEntities, playerTouchEntity))flag=false;
+			if(flag){
 				_exed=false;
 			}
 			

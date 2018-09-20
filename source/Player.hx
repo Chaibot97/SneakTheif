@@ -22,8 +22,8 @@ class Player extends FlxSprite
 		animation.add("lr", [4, 5, 6, 7], 6, true);
 		animation.add("u", [8, 9, 10, 11], 6, true);
 		drag.x = drag.y = 1600;
-		setSize(8, 10);
-		offset.set(4, 14);
+		setSize(8, 2);
+		offset.set(4, 22);
 		
 		// _sndStep = FlxG.sound.load(AssetPaths.step__wav);
 	}

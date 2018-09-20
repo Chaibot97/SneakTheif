@@ -13,10 +13,11 @@ class Entity extends FlxSprite
 		super(X, Y);
 		_name = name; 
 		_eType=eType;
+		this.immovable=true;
 		if(name=="rug"){
-			loadGraphic(AssetPaths.LivingRoomRug__png, false);
+			loadGraphic(AssetPaths.LivingRoomRug__png, false,30,30);
 		}else if(name=="ctable"){
-			loadGraphic(AssetPaths.LivingRoomCoffee__png, false);
+			loadGraphic(AssetPaths.LivingRoomCoffee__png, false,30,30);
 		}else
 		{
 			loadGraphic(AssetPaths.coin__png, false, 8, 8);
