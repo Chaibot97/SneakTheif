@@ -49,7 +49,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var _wait:Bool = true;	// this flag will be set to true when don't want the player to be able to do anything (between turns)
 	var _player:Player;
 	var _alive:Bool;
-	
+	var _spr:FlxSprite;
+	var _text:FlxText;
 	// var _sprScreen:FlxSprite;
 	
 	public function new() 
@@ -69,10 +70,10 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		add(_sprBack);
 		
 		
-		var coin=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
-		add(coin);
-		var text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts", 8);
-		add(text);
+		_spr=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
+		_text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts", 8);
+		add(_spr);
+		add(_text);
 		// var _textField:TextField;
 		// var input = new FlxInputText(_sprBack.x +90, _sprBack.y +100, 0, "input some texts", 8);
 		// add(input);
@@ -95,15 +96,18 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	 * @param	PlayerHealth	The amount of health the player is starting with
 	 * @param	E				This links back to the Enemy we are fighting with so we can get it's health and type (to change our sprite).
 	 */
-	public function init(P:Player):Void
+	public function init(P:Player,C:Entity):Void
 	{
+		_spr.loadGraphicFromSprite(C);
+		_text.text=C._name;
+		_text.offset.set(_text.width/2,0);
 		_player=P;
 		
 		_player.active=false;
 
 		_alive=true;
 		// do a numeric tween to fade in our combat hud when the tween is finished, call finishFadeIn
-		FlxTween.num(0, 1, .66, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
+		FlxTween.num(0, 1, .33, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
 		visible = true;
 	}
 	

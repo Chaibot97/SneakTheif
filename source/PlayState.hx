@@ -39,6 +39,8 @@ class PlayState extends FlxState
 
 	var _grpEntities:FlxTypedGroup<Entity>;
 	var _grpCEntities:FlxTypedGroup<Entity>;
+	var _grpHitBoxes:FlxTypedGroup<Entity>;
+
 	var _uniqueEntities:FlxTypedGroup<Entity>; //List of unique interactable objects
 
 	var _hud:HUD;
@@ -83,6 +85,8 @@ class PlayState extends FlxState
 		add(_grpEntities);
 		_grpCEntities = new FlxTypedGroup<Entity>();
 		add(_grpCEntities);
+		_grpHitBoxes = new FlxTypedGroup<Entity>();
+		add(_grpHitBoxes);
 
 		
 		_player = new Player();
@@ -122,6 +126,8 @@ class PlayState extends FlxState
 	{
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
+		var w:Int = Std.parseInt(entityData.get("w"));
+		var h:Int = Std.parseInt(entityData.get("h"));
 		var etype:String =entityData.get("etype");
 		var collide:String =entityData.get("collide");
 
@@ -134,11 +140,12 @@ class PlayState extends FlxState
 		}
 		else if(collide=="f")
 		{
-			_grpEntities.add(new Entity(x, y, etype,entityName));
+			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
 		}
 		else
 		{
-			_grpCEntities.add(new Entity(x, y, etype,entityName));
+			_grpCEntities.add(new Entity(x, y,w,h, etype,entityName));
+			_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
 		}
 
 
@@ -168,8 +175,9 @@ class PlayState extends FlxState
 			infoText.visible=false;
 			FlxG.collide(_player, _mFloor);
 			var flag=true;
+			FlxG.collide(_player, _grpCEntities);
 			if(FlxG.overlap(_player, _grpEntities, playerTouchEntity))flag=false;
-			if(FlxG.collide(_player, _grpCEntities, playerTouchEntity))flag=false;
+			if(FlxG.overlap(_player, _grpHitBoxes, playerTouchEntity))flag=false;
 			if(flag){
 				_exed=false;
 			}
@@ -196,11 +204,17 @@ class PlayState extends FlxState
 			infoText.y = P.y-15 ;
 			infoText.x = P.x +10;
 			if(!_exed)infoText.visible=true;
+			if(C._eType=="hitbox"){
+				_grpCEntities.forEach(function(spr:Entity){
+					if(spr._name==C._name) C=spr;
+				});
+			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
-				_examineHud.init(_player);
+				_examineHud.init(P,C);
 				C.kill();
 				infoText.visible=false;
 				_exed=true;
+				trace(C._name);
 				
 			}
 		}

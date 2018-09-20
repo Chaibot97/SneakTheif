@@ -61,11 +61,10 @@
 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1</walls>
   <entities>
     <player id="0" x="272" y="160" />
-    <rug id="1" x="176" y="218" etype="fixed" collide="f"/>
-    <ctable id="2" x="176" y="228" etype="fixed" collide="t"/>
-    <coin id="3" x="150" y="160" />
-    <coin id="4" x="150" y="200" />
+    <rug id="1" x="176" y="218" w="30" h="30" etype="fixed" collide="f"/>
+    <ctable id="2" x="176" y="228" w="30" h="30" etype="fixed" collide="t"/>
+    <plant id="3" x="70" y="262" w="30" h="30" etype="fixed" collide="t" />
+    <lamp id="4" x="285" y="265" w="30" h="30" etype="fixed" collide="t"/>
     <coin id="5" x="200" y="100" />
-    <coin id="6" x="120" y="250" />
   </entities>
 </level>
