@@ -203,16 +203,25 @@ class PlayState extends FlxState
 			infoText.y = P.y-20 ;
 			infoText.x = P.x +12;
 			if(!_exed)infoText.visible=true;
+
+			
 			if(C._eType=="hitbox"){
 				_grpCEntities.forEach(function(spr:Entity){
 					if(spr._name==C._name) C=spr;
 				});
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
-				_examineHud.init(P,C);
-				C.kill();
+				if(C._name=="door"){
+					FlxG.camera.fade(FlxColor.BLACK, .66, true);
+					P.x=170; 
+					P.y=218;
+				}else{
+					_examineHud.init(P,C);
+					C.kill();
+				}
 				infoText.visible=false;
 				_exed=true;
+
 				trace(C._name);
 				
 			}

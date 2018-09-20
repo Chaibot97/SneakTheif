@@ -18,7 +18,7 @@ class Entity extends FlxSprite
 		this.immovable=true;
 		if(eType=="hitbox"){
 			
-			makeGraphic(W+12, H+12);
+			makeGraphic(W+14, H+12);
 
 			x-=6;
 			y-=6;
@@ -30,11 +30,18 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomRug__png, false,W,H);
 			}else if(name=="ctable"){
 				loadGraphic(AssetPaths.LivingRoomCoffee__png, false,W,H);
-				
 			}else if(name=="plant"){
 				loadGraphic(AssetPaths.LivingRoomPottedPlant__png, false,W,H);
 			}else if(name=="lamp"){
 				loadGraphic(AssetPaths.LivingRoomStandingLamp__png, false,W,H);
+			}else if(name=="couchm"){
+				loadGraphic(AssetPaths.LivingRoomLargeCouch__png, false,W,H);
+			}else if(name=="couchl"){
+				loadGraphic(AssetPaths.LivingRoomSmallCouchLeft__png, false,W,H);
+			}else if(name=="couchr"){
+				loadGraphic(AssetPaths.LivingRoomSmallCouchRight__png, false,W,H);
+			}else if(name=="tv"){
+				loadGraphic(AssetPaths.LivingRoomTV__png, false,W,H);
 			}else
 			{
 				loadGraphic(AssetPaths.coin__png, false, 8, 8);
