@@ -34,7 +34,6 @@ class PlayState extends FlxState
 	var _mWalls:FlxTilemap;
 
 	var _grpEntities:FlxTypedGroup<Entity>;
-	var _uniqueEntities:FlxTypedGroup<Entity>; //List of unique interactable objects
 
 	var _hud:HUD;
 	var _money:Int = 0;
@@ -75,14 +74,11 @@ class PlayState extends FlxState
 		
 		_player = new Player();
 
-		_uniqueEntities = new FlxTypedGroup<Entity>(); 
-		_map.loadEntities(placeEntities, "entities");
 		
 		add(_player);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
-		_hud.addDataBase(_uniqueEntities);
 		add(_hud);
 		
 		// _combatHud = new CombatHUD();
@@ -124,16 +120,9 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "coin")
 		{
-			_grpEntities.add(new Entity(x + 4, y + 4, entityName));
+			_grpEntities.add(new Entity(x + 4, y + 4, AssetPaths.coin__png, entityName));
 		}
-		var hi:Bool = false; 
-		for(i in 0..._uniqueEntities.length){
-			if(_uniqueEntities.members[i]._name == tempEnt._name){
-				return; 
-			}
-			
-		}
-		_uniqueEntities.add(tempEnt);
+
 	}
 
 
@@ -159,6 +148,9 @@ class PlayState extends FlxState
 		if(FlxG.keys.anyJustReleased([L])){
 			lightsOff();
 		}
+		displayHUD(_hud);
+		_map.loadEntities(placeEntities, "entities");
+		trace(_player.velocity);
 	}
 
 	
@@ -191,10 +183,7 @@ class PlayState extends FlxState
 	}
 
 	function displayHUD(playHUD:HUD):Void{
-		for(entList in playHUD._currentInv){
-			
-			entList.members[0].graphic;
-		}
-		add(playHUD._txtMoney);
+		playHUD.forEach(this.add);
+		
 	}
 }

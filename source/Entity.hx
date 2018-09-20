@@ -1,17 +1,17 @@
 package;
-
 import flixel.FlxSprite;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.system.FlxAssets;
 
 class Entity extends FlxSprite
 {
 	public var _name:String; 
-	public function new(X:Float=0, Y:Float=0, ?name:String = "null") 
+	public function new(?X:Float=8, ?Y:Float=8, ?spriteGraph:FlxGraphicAsset = AssetPaths.coin__png, ?name:String = "null") 
 	{
-		super(X, Y);
+		super(X, Y, spriteGraph);
 		_name = name; 
-		loadGraphic(AssetPaths.coin__png, false, 8, 8);
+		//loadGraphic(spriteGraph, false, 8, 8);
 	}
 
 	
