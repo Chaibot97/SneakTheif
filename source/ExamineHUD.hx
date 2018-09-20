@@ -64,14 +64,16 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		
 		// first, create our background. Make a black square, then draw borders onto it in white. Add it to our group.
 		_sprBack = new FlxSprite().makeGraphic(200, 120, FlxColor.WHITE);
-		_sprBack.drawRect(1, 1, 196, 60, FlxColor.BLACK);
-		_sprBack.drawRect(1, 62, 196, 58, FlxColor.BLACK);
+		_sprBack.drawRect(1, 1, 198, 58, FlxColor.BLACK);
+		_sprBack.drawRect(1, 60, 198, 58, FlxColor.BLACK);
 		_sprBack.screenCenter();
 		add(_sprBack);
 		
 		
 		_spr=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
-		_text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts", 8);
+		_text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts"+"                               ", 8);
+		_text.wordWrap=true;
+		_spr.screenCenter();
 		add(_spr);
 		add(_text);
 		// var _textField:TextField;
@@ -98,9 +100,16 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	 */
 	public function init(P:Player,C:Entity):Void
 	{
-		_spr.loadGraphicFromSprite(C);
-		_text.text=C._name;
+		if(C._name=="writing"){
+			_text.text=new Dialog().lines.get(C._name)[0];
+			_spr.loadGraphic(AssetPaths.LivingRoomWallsWriting__png, false);
+		}else{
+			_spr.loadGraphicFromSprite(C);
+			_text.text=C._name;
+		}
 		_text.offset.set(_text.width/2,0);
+		_spr.screenCenter();
+		_spr.y-=_spr.height/2+4;
 		_player=P;
 		
 		_player.active=false;
@@ -148,7 +157,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			_player.active=true;
 
 		}
-				_alive=false;
+		_alive=false;
 
 		super.update(elapsed);
 		_alive=false;

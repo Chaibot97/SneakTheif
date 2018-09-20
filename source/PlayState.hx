@@ -138,14 +138,13 @@ class PlayState extends FlxState
 			_player.x = x;
 			_player.y = y;
 		}
-		else if(collide=="f")
-		{
-			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
-		}
-		else
+		else if(collide=="t")
 		{
 			_grpCEntities.add(new Entity(x, y,w,h, etype,entityName));
 			_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
+		}else
+		{
+			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
 		}
 
 
@@ -201,8 +200,8 @@ class PlayState extends FlxState
 	{
 		if (P.alive && P.exists && C.alive && C.exists)
 		{
-			infoText.y = P.y-15 ;
-			infoText.x = P.x +10;
+			infoText.y = P.y-20 ;
+			infoText.x = P.x +12;
 			if(!_exed)infoText.visible=true;
 			if(C._eType=="hitbox"){
 				_grpCEntities.forEach(function(spr:Entity){
