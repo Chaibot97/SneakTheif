@@ -31,11 +31,11 @@
   </walls>
   <entities>
     <player id="0" x="115" y="230" />
-    <coin id="1" x="256" y="160" />
-    <coin id="1" x="256" y="160" />
-    <coin id="1" x="150" y="160" />
-    <coin id="1" x="150" y="200" />
-    <coin id="1" x="200" y="100" />
-    <coin id="1" x="120" y="250" />
+    <entity id="1" x="176" y="218" etype="fixed" name="carpet"/>
+    <coin id="2" x="256" y="160" />
+    <coin id="3" x="150" y="160" />
+    <coin id="4" x="150" y="200" />
+    <coin id="5" x="200" y="100" />
+    <coin id="6" x="120" y="250" />
   </entities>
 </level>

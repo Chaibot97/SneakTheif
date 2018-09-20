@@ -27,13 +27,18 @@ import openfl8.*;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
 
+
+import flixel.addons.editors.tiled.TiledMap;
+
 class PlayState extends FlxState
 {
 	var _player:Player;
 	var _map:FlxOgmoLoader;
+	var _mFloor:FlxTilemap;
 	var _mWalls:FlxTilemap;
 
 	var _grpEntities:FlxTypedGroup<Entity>;
+	var _grpCEntities:FlxTypedGroup<Entity>;
 	var _uniqueEntities:FlxTypedGroup<Entity>; //List of unique interactable objects
 
 	var _hud:HUD;
@@ -47,6 +52,7 @@ class PlayState extends FlxState
 	var infoText:FlxText;
 	var filters:Array<BitmapFilter> = [];
 	var _dialog:Dialog=new Dialog();
+	var _exed:Bool=false;
 	#if mobile
 	public static var virtualPad:FlxVirtualPad;
 	#end
@@ -63,15 +69,21 @@ class PlayState extends FlxState
 		FlxG.game.filtersEnabled = false;
 		FlxG.camera.filtersEnabled = false;
 
-		_map = new FlxOgmoLoader(AssetPaths.room_001__oel);
-		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
+		_map = new FlxOgmoLoader(AssetPaths.livingRoom__oel);
+		_mFloor = _map.loadTilemap(AssetPaths.LivingRoomFloor__png, 16, 16, "floor");
+		_mFloor.follow();
+		_mFloor.setTileProperties(1, FlxObject.NONE);
+		_mFloor.setTileProperties(2, FlxObject.ANY);
+		add(_mFloor);
+		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
 		_mWalls.follow();
-		_mWalls.setTileProperties(1, FlxObject.NONE);
-		_mWalls.setTileProperties(2, FlxObject.ANY);
+
 		add(_mWalls);
 		
 		_grpEntities = new FlxTypedGroup<Entity>();
 		add(_grpEntities);
+		_grpCEntities = new FlxTypedGroup<Entity>();
+		add(_grpCEntities);
 		
 		_player = new Player();
 
@@ -82,7 +94,7 @@ class PlayState extends FlxState
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
-		_hud.addDataBase(_uniqueEntities);
+		// _hud.addDataBase(_uniqueEntities);
 		add(_hud);
 		
 		_examineHud = new ExamineHUD();
@@ -110,26 +122,34 @@ class PlayState extends FlxState
 	{
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
-		
-		var tempEnt:Entity = new Entity(x,y, entityName); 
+		var etype:String =entityData.get("etype");
+		var collide:String =entityData.get("collide");
+
+		// var tempEnt:Entity = new Entity(x,y, etype,entityName); 
 
 		if (entityName == "player")
 		{
 			_player.x = x;
 			_player.y = y;
 		}
-		else if (entityName == "coin")
+		else if(collide=="f")
 		{
-			_grpEntities.add(new Entity(x + 4, y + 4, entityName));
+			_grpEntities.add(new Entity(x, y, etype,entityName));
 		}
-		var hi:Bool = false; 
-		for(i in 0..._uniqueEntities.length){
-			if(_uniqueEntities.members[i]._name == tempEnt._name){
-				return; 
-			}
+		else
+		{
+			_grpCEntities.add(new Entity(x, y, etype,entityName));
+		}
+
+
+		// var hi:Bool = false; 
+		// for(i in 0..._uniqueEntities.length){
+		// 	if(_uniqueEntities.members[i]._name == tempEnt._name){
+		// 		return; 
+		// 	}
 			
-		}
-		_uniqueEntities.add(tempEnt);
+		// }
+		// _uniqueEntities.add(tempEnt);
 	}
 
 
@@ -145,15 +165,24 @@ class PlayState extends FlxState
 		
 		if (!_inCombat)
 		{
-			infoText.visible=false;
-			FlxG.collide(_player, _mWalls);
-			FlxG.overlap(_player, _grpEntities, playerTouchEntity);
+			
+			FlxG.collide(_player, _mFloor);
+			if(!FlxG.overlap(_player, _grpEntities, playerTouchEntity)||
+			!FlxG.collide(_player, _grpCEntities, playerTouchEntity)){
+				infoText.visible=false;
+				_exed=false;
+			}
+			
 		}
 		if(FlxG.keys.anyJustReleased([K])){
 			lightsOn();
 		}
 		if(FlxG.keys.anyJustReleased([L])){
 			lightsOff();
+		}
+		if(FlxG.keys.anyJustReleased([T])){
+			trace(_player.x);
+			trace(_player.y);
 		}
 	}
 
@@ -165,10 +194,12 @@ class PlayState extends FlxState
 		{
 			infoText.y = P.y-15 ;
 			infoText.x = P.x +10;
-			infoText.visible=true;
-			if(FlxG.keys.anyJustReleased([J])){
+			if(!_exed)infoText.visible=true;
+			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				_examineHud.init(_player);
 				C.kill();
+				infoText.visible=false;
+				_exed=true;
 				
 			}
 		}

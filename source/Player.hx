@@ -15,15 +15,15 @@ class Player extends FlxSprite
 	{
 		super(X, Y);
 		
-		loadGraphic(AssetPaths.player__png, true, 16, 16);
-		setFacingFlip(FlxObject.LEFT, false, false);
-		setFacingFlip(FlxObject.RIGHT, true, false);
-		animation.add("d", [0, 1, 0, 2], 6, false);
-		animation.add("lr", [3, 4, 3, 5], 6, false);
-		animation.add("u", [6, 7, 6, 8], 6, false);
+		loadGraphic(AssetPaths.GD_P1_Sprite__png, true, 16, 30);
+		setFacingFlip(FlxObject.LEFT, true, false);
+		setFacingFlip(FlxObject.RIGHT, false, false);
+		animation.add("d", [0, 1, 2, 3], 6, true);
+		animation.add("lr", [4, 5, 6, 7], 6, true);
+		animation.add("u", [8, 9, 10, 11], 6, true);
 		drag.x = drag.y = 1600;
-		setSize(8, 14);
-		offset.set(4, 2);
+		setSize(8, 10);
+		offset.set(4, 14);
 		
 		// _sndStep = FlxG.sound.load(AssetPaths.step__wav);
 	}

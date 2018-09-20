@@ -48,7 +48,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var _alpha:Float = 0;	// we will use this to fade in and out our combat hud
 	var _wait:Bool = true;	// this flag will be set to true when don't want the player to be able to do anything (between turns)
 	var _player:Player;
-	
+	var _alive:Bool;
 	
 	// var _sprScreen:FlxSprite;
 	
@@ -68,6 +68,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_sprBack.screenCenter();
 		add(_sprBack);
 		
+		
 		var coin=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
 		add(coin);
 		var text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts", 8);
@@ -86,7 +87,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		// mark this object as not active and not visible so update and draw don't get called on it until we're ready to show it.
 		active = false;
 		visible = false;
-		
+		_alive=false;
 	}
 	
 	/**
@@ -99,6 +100,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_player=P;
 		
 		_player.active=false;
+
+		_alive=true;
 		// do a numeric tween to fade in our combat hud when the tween is finished, call finishFadeIn
 		FlxTween.num(0, 1, .66, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
 		visible = true;
@@ -125,6 +128,11 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_wait = false;
 	}
 	
+	public function isAlive():Bool 
+	{
+		return _alive;
+		
+	}
 	
 
 	
@@ -136,8 +144,11 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			_player.active=true;
 
 		}
+				_alive=false;
+
 		super.update(elapsed);
-		
+		_alive=false;
+
 	}
 	
 }
