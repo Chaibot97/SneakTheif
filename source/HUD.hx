@@ -53,15 +53,19 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		lkText = new FlxText(0, 0, 40, "0" , 8);
 		lockKeys.scale.set(.05, .05);
 		lkText.scrollFactor.set(0, 0);
+		lkList = new FlxTypedGroup<Entity>(); 
 
 		cipherScraps = new Entity(25,10, AssetPaths.GD_Paper__png);
 		csText = new FlxText(35, 2, 40, "0" , 8);
 		cipherScraps.scale.set(2,2);
 		csText.scrollFactor.set(0, 0);
+		csList = new FlxTypedGroup<Entity>(); 
 
 		numberScraps = new Entity(45,10, AssetPaths.coin__png);
 		nsText = new FlxText(55, 2, 40, "0", 8);
 		nsText.scrollFactor.set(0, 0);
+		nsList = new FlxTypedGroup<Entity>(); 
+
 
 		backGraphic = new FlxSprite().makeGraphic(FlxG.width, 40, FlxColor.BLUE);
 		backGraphic.x = 0; 
@@ -118,7 +122,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 							 	csList.add(newItem);
 								csText.text = "" + cipherScrapsCount;
 
-			case "numberScraps": numberScrapsCount++; 
+			case "coin": numberScrapsCount++; 
 							 nsList.add(newItem);
 							 nsText.text = "" + numberScrapsCount;
 			default: trace("nothing");

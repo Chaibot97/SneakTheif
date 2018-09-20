@@ -101,6 +101,7 @@ class PlayState extends FlxState
 		displayHUD(_hud);//display HUD
 
 		add(infoText);
+		_map.loadEntities(placeEntities, "entities");
 
 
 		super.create();
@@ -122,7 +123,6 @@ class PlayState extends FlxState
 		{
 			_grpEntities.add(new Entity(x + 4, y + 4, AssetPaths.coin__png, entityName));
 		}
-
 	}
 
 
@@ -149,8 +149,7 @@ class PlayState extends FlxState
 			lightsOff();
 		}
 		displayHUD(_hud);
-		_map.loadEntities(placeEntities, "entities");
-		trace(_player.velocity);
+		
 	}
 
 	

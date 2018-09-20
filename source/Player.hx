@@ -113,7 +113,6 @@ class Player extends FlxSprite
 	{
 		movement();
 		super.update(elapsed);
-		// trace(x);
-		// trace(y);
+
 	}
 }
