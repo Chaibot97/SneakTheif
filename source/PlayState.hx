@@ -34,6 +34,8 @@ class PlayState extends FlxState
 	var _mWalls:FlxTilemap;
 
 	var _grpEntities:FlxTypedGroup<Entity>;
+	var _uniqueEntities:FlxTypedGroup<Entity>; //List of unique interactable objects
+
 	var _hud:HUD;
 	var _money:Int = 0;
 	var _health:Int = 3;
@@ -72,13 +74,15 @@ class PlayState extends FlxState
 		add(_grpEntities);
 		
 		_player = new Player();
-		
+
+		_uniqueEntities = new FlxTypedGroup<Entity>(); 
 		_map.loadEntities(placeEntities, "entities");
 		
 		add(_player);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
+		_hud.addDataBase(_uniqueEntities);
 		add(_hud);
 		
 		_examineHud = new ExamineHUD();
@@ -106,6 +110,9 @@ class PlayState extends FlxState
 	{
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
+		
+		var tempEnt:Entity = new Entity(x,y, entityName); 
+
 		if (entityName == "player")
 		{
 			_player.x = x;
@@ -113,9 +120,19 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "coin")
 		{
-			_grpEntities.add(new Entity(x + 4, y + 4));
+			_grpEntities.add(new Entity(x + 4, y + 4, entityName));
 		}
+		var hi:Bool = false; 
+		for(i in 0..._uniqueEntities.length){
+			if(_uniqueEntities.members[i]._name == tempEnt._name){
+				return; 
+			}
+			
+		}
+		_uniqueEntities.add(tempEnt);
 	}
+
+
 
 	override public function update(elapsed:Float):Void
 	{
@@ -152,9 +169,10 @@ class PlayState extends FlxState
 			if(FlxG.keys.anyJustReleased([J])){
 				_examineHud.init(_player);
 				C.kill();
-				_hud.updateHUD();
+				
 			}
 		}
+		
 	}
 
 	function lightsOn():Void
