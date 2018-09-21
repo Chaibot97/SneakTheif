@@ -229,15 +229,14 @@ class PlayState extends FlxState
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
-					//if(_hud.hasDoorKey()){
-						
-					
-						FlxG.camera.fade(FlxColor.BLACK, .66, true);
-						P.x=550; 
-						P.y=230;
-					//}
-				}
-				else if(C._name == "printer"){
+					FlxG.camera.fade(FlxColor.BLACK, 1, true);
+					P.x=550; 
+					P.y=240;
+				}else if(C._name=="door2"){
+					FlxG.camera.fade(FlxColor.BLACK, 1, true);
+					P.x=273; 
+					P.y=160;
+				}else if(C._name == "printer"){
 					key1 = new Entity(0, 0, AssetPaths.CipherKey1__png, 60, 60, "int", "cipherScraps");
 					_hud.add(key1);
 				}
@@ -264,17 +263,7 @@ class PlayState extends FlxState
 				else if(C._name == "plant"){
 					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
 					_hud.add(key1);
-				}																								
-				else{
-					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=550; 
-					P.y=240;
-				}else if(C._name=="door2"){
-					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=273; 
-					P.y=160;
 				}else{
-				}else if(C._name=="door2"){
 					_examineHud.init(P,C);
 					C.kill();
 				}
