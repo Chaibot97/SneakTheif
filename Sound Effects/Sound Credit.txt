@@ -1,3 +1,8 @@
 Sound Effects from here:
-https://freesound.org/
+Music: https://freesound.org/people/dominictreis/sounds/381531/
+Footsteps: https://www.zapsplat.com/sound-effect-packs/footsteps-on-hollow-wood-floor/
+Item Pickup: https://www.zapsplat.com/
+Victory: https://www.zapsplat.com/
+Loss: https://www.zapsplat.com/
+
 https://www.zapsplat.com/
