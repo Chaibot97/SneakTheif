@@ -17,7 +17,7 @@ class Dialog
         "Safe" => ["Hello, what have we got here?","A key panel? Well that should make this interesting.", "Jackpot! I'm in!"],
         "trash" => ["Now this paper looks like it might be worth something\n(A paper scrap found)"],
         "tv" => ["There's nothing good on at this time of day."],
-        "couchl" => ["The cushions seems wierd.", "Aha! What's this in between the cushions?\n(Key for the cabinate found)","I cound sit here all day."],
+        "couchl" => ["The cushions seems wierd.", "Aha! What's this in between the cushions?\n(Key for the cabinat found)","I cound sit here all day."],
         "couchr" => ["I could sit on something like this forever."],
         "couchm" => ["What's on the couch?\n(A number script found)"],
         "lamp" => ["Bright as the sun"],

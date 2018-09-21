@@ -74,8 +74,19 @@ class PlayState extends FlxState
 	var couchl:Int=0;
 	var _safe:Entity;
 
-	var hasKey1:Bool = false;
-	var hasKey2:Bool = false;
+	public var hasKey1:Bool = false;
+	public var hasKey2:Bool = false;
+	public var hasNum1:Bool = false;
+	public var hasNum2:Bool = false;
+	public var hasNum3:Bool = false;
+	public var hasNum4:Bool = false;
+	public var hasCode1:Bool = false;
+		public var hasCode2:Bool = false;
+
+	public var hasCode3:Bool = false;
+
+	public var hasCode4:Bool = false;
+
 
 
 	#if mobile
@@ -126,7 +137,7 @@ class PlayState extends FlxState
 		_hud = new HUD();
 		// add(_hud);
 		
-		_examineHud = new ExamineHUD(_dialog);
+		_examineHud = new ExamineHUD(_dialog,this);
 		add(_examineHud);
 		
 		
@@ -206,18 +217,18 @@ class PlayState extends FlxState
 			}
 			
 		}
-		if(FlxG.keys.anyJustReleased([K])){
-			lightsOn();
-		}
-		if(FlxG.keys.anyJustReleased([L])){
-			lightsOff();
-		}
+		// if(FlxG.keys.anyJustReleased([K])){
+		// 	lightsOn();
+		// }
+		// if(FlxG.keys.anyJustReleased([L])){
+		// 	lightsOff();
+		// }
 		displayHUD(_hud);
 		
-		if(FlxG.keys.anyJustReleased([T])){
-			trace(_player.x);
-			trace(_player.y);
-		}
+		// if(FlxG.keys.anyJustReleased([T])){
+		// 	trace(_player.x);
+		// 	trace(_player.y);
+		// }
 		_hud.checkKeyPress(_examineHud, _player);
 	}
 
@@ -263,6 +274,7 @@ class PlayState extends FlxState
 							_hud.updateHUD(key2);
 							hasKey2=true;
 							C.inRoom = false;
+							
 						}
 							_examineHud.init(P,C);
 					
@@ -276,6 +288,7 @@ class PlayState extends FlxState
 							_dialog.lines.get(C._name).shift();
 							_hud.updateHUD(paperScrap3);
 							C.inRoom = false;
+							hasCode3=true;
 						}
 						
 					}
@@ -283,33 +296,40 @@ class PlayState extends FlxState
 						num1 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
 						_hud.updateHUD(num1);
 						C.inRoom = false;
+						hasNum1=true;
 
 					}
 					else if(C._name == "laptop"){
 						num2 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
 						_hud.updateHUD(num2);
 						C.inRoom = false;
+						hasNum2=true;
 					}
 					else if(C._name == "shelf"){
 						num3 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
 						_hud.updateHUD(num3);
 						C.inRoom = false;
+						hasNum3=true;
 					}else if(C._name == "couchm"){
 						num4 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
 						_hud.updateHUD(num4);
 						C.inRoom = false;
+						hasNum4=true;
 					}else if(C._name == "printer"){
 						paperScrap1 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "cipherScraps");
 						_hud.updateHUD(paperScrap1);
 						C.inRoom = false;
+						hasCode1=true;
 					}else if(C._name == "trash"){
 						paperScrap2 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "cipherScraps");
 						_hud.updateHUD(paperScrap2);
 						C.inRoom = false;
+						hasCode2=true;
 					}else if(C._name == "paper"){
 						paperScrap4 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "cipherScraps");
 						_hud.updateHUD(paperScrap4);
 						C.inRoom = false;
+						hasCode4=true;
 					}
 					
 					else if(C._name == "plant2"){
@@ -330,7 +350,7 @@ class PlayState extends FlxState
 				infoText.visible=false;
 				_exed=true;
 
-				trace(C._name);
+				// trace(C._name);
 				
 			}
 		}

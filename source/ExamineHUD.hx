@@ -33,8 +33,13 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var safe:Bool;
 	var _invGraphics:FlxTypedGroup<Entity>;
 	var code:FlxText;
-	var _timer= new FlxTimer();
-	public function new(dialog:Dialog) 
+	var _ps:PlayState;
+	var c1:FlxSprite;
+	var c2:FlxSprite;
+	var c3:FlxSprite;
+	var c4:FlxSprite;
+	
+	public function new(dialog:Dialog,PS:PlayState) 
 	{
 		super();
 		
@@ -49,7 +54,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_sprBack.drawRect(1, 60, 198, 58, FlxColor.BLACK);
 		_sprBack.screenCenter();
 		add(_sprBack);
-		
+
+		_ps=PS;
 		_dialog=dialog;
 		
 		_spr=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
@@ -59,22 +65,31 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		add(_spr);
 		add(_text);
 
+		c1=new FlxSprite(_sprBack.x +30, _sprBack.y +20, AssetPaths.CipherKey1__png);
+		c2=new FlxSprite(_sprBack.x +60, _sprBack.y +20, AssetPaths.CipherKey2__png);
+		c3=new FlxSprite(_sprBack.x +90, _sprBack.y +20, AssetPaths.CipherKey3__png);
+		c4=new FlxSprite(_sprBack.x +120, _sprBack.y +10, AssetPaths.CipherKey4__png);
+		add(c1);
+		add(c2);
+		add(c3);
+		add(c4);
+
 		code=new FlxText(_sprBack.x +112, _sprBack.y-30, 0, "    ", 8);
 		add(code);
 
 		_sprSafe=new FlxSprite();
 		_sprSafe.loadGraphic(AssetPaths.SafeBig__png, true,112,112);
-		_sprSafe.animation.add("1", [0,1, 0], 6, false);
-		_sprSafe.animation.add("2", [2, 0], 6, false);
-		_sprSafe.animation.add("3", [3, 0], 6, false);
-		_sprSafe.animation.add("4", [4, 0], 6, false);
-		_sprSafe.animation.add("5", [5, 0], 6, false);
-		_sprSafe.animation.add("6", [6, 0], 6, false);
-		_sprSafe.animation.add("7", [7, 0], 6, false);
-		_sprSafe.animation.add("8", [8, 0], 6, false);
-		_sprSafe.animation.add("9", [9, 0], 6, false);
-		_sprSafe.animation.add("0", [10, 0], 6, false);
-		_sprSafe.animation.add("open", [11], 6, false);
+		// _sprSafe.animation.add("1", [0,1, 0], 6, false);
+		// _sprSafe.animation.add("2", [2, 0], 6, false);
+		// _sprSafe.animation.add("3", [3, 0], 6, false);
+		// _sprSafe.animation.add("4", [4, 0], 6, false);
+		// _sprSafe.animation.add("5", [5, 0], 6, false);
+		// _sprSafe.animation.add("6", [6, 0], 6, false);
+		// _sprSafe.animation.add("7", [7, 0], 6, false);
+		// _sprSafe.animation.add("8", [8, 0], 6, false);
+		// _sprSafe.animation.add("9", [9, 0], 6, false);
+		// _sprSafe.animation.add("0", [10, 0], 6, false);
+		// _sprSafe.animation.add("open", [11], 6, false);
 		safe=false;
 		forEach(function(spr:FlxSprite)
 		{
@@ -87,13 +102,30 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	}
 	
 	
-	public function init(P:Player, ?C:Entity = null, ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
+	public function init(P:Player, ?C:Entity = null, ?cls:String="", ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
+		_spr.visible=true;
+		c1.visible=false;
+		c2.visible=false;
+		c3.visible=false;
+		c4.visible=false;
 		code.visible=false;
 		code.text="";
 		if(_dialog.lines.exists(C._name)){
 			_text.text=_dialog.lines.get(C._name)[0];
-			if(_dialog.lines.get(C._name).length>1&&C._name!="cabinate"){
+			if(cls=="code"){
+				trace("x");
+				_spr.visible=false;
+				if(_ps.hasCode1){
+					c1.visible=true;
+				}else if(_ps.hasCode2){
+					c2.visible=true;
+				}else if(_ps.hasCode3){
+					c3.visible=true;
+				}else if(_ps.hasCode4){
+					c4.visible=true;
+				}
+			}else if(_dialog.lines.get(C._name).length>1&&C._name!="cabinet"){
 				_dialog.lines.get(C._name).shift();
 			}
 			if(C._name=="writing"){
@@ -105,6 +137,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			}else{
 				_spr.loadGraphicFromSprite(C);
 			}
+			
 		}
 		else if(invPop){
 			_invGraphics = choiceInv; 
@@ -187,9 +220,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 				// _sprSafe.animation.play("0");
 				code.text+="0";
 			}
-			super.update(elapsed);
 
-			if(code.text.length>=4){			
+			if(code.text.length>=4&&code.text!="5216"){			
 				code.text="";
 				
 			}else if(code.text=="5216"){
@@ -207,6 +239,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			_player.active=true;
 			}
 		}
+		super.update(elapsed);
+
 
 	}
 	
