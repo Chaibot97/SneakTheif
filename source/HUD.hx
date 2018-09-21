@@ -60,7 +60,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		csList = new FlxTypedGroup<Entity>(); 
 		cipherScraps.scale.set(.5,.7);
 
-		numberScraps = new Entity(80,30, AssetPaths.GD_StickyNote__png, true);
+		numberScraps = new Entity(80,30, AssetPaths.StickyNote__png, true);
 		nsText = new FlxText(83, 16, 40, "0", 8);
 		nsList = new FlxTypedGroup<Entity>(); 
 		numberScraps.scale.set(3.2,3.2);

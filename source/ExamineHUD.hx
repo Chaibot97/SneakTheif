@@ -101,10 +101,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		{
 			spr.alpha = _alpha;
 		});
-		_invGraphics.forEach(function(spr:Entity)
-		{
-			spr.alpha = _alpha;
-		});
+
 	}
 	
 	/**
