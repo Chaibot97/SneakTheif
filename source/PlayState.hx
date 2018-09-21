@@ -67,7 +67,10 @@ class PlayState extends FlxState
 	var key1:Entity;
 	var key2:Entity;
 
+	var paint:Int=0;
+	var _safe:Entity;
 
+	var key1B:Bool=false;
 
 
 	#if mobile
@@ -122,7 +125,6 @@ class PlayState extends FlxState
 		add(_examineHud);
 		
 		
-		
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		
 		infoText = new FlxText(2, 0, -1, "press j to examine",7);
@@ -152,13 +154,16 @@ class PlayState extends FlxState
 		var act:String =entityData.get("act");
 
 		// var tempEnt:Entity = new Entity(x,y, etype,entityName); 
-
+		
 		if (entityName == "player")
 		{
 			_player.x = x;
 			_player.y = y;
-		}
-		else if(collide=="t")
+		}else if(entityName == "safe")
+		{
+			_safe=new Entity(x, y,w,h, etype,entityName);
+			_grpEntities.add(_safe);
+		}else if(collide=="t")
 		{
 			_grpCEntities.add(new Entity(x, y,w,h, etype,entityName));
 			if(act!="f")
@@ -229,18 +234,18 @@ class PlayState extends FlxState
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
-					//if(_hud.hasDoorKey()){
-						
-					
-						FlxG.camera.fade(FlxColor.BLACK, .66, true);
-						P.x=550; 
-						P.y=230;
-					//}
+					FlxG.camera.fade(FlxColor.BLACK, .66, true);
+					P.x=530; 
+					P.y=270;
 				}
 				else if(C._name=="door2"){
+					if(!key1B){
+						
+					}else{
 						FlxG.camera.fade(FlxColor.BLACK, .66, true);
-						P.x=273; 
+						P.x=220; 
 						P.y=160;
+					}
 				}
 				
 				else if(C._name == "printer"){
@@ -248,23 +253,23 @@ class PlayState extends FlxState
 					trace("hi");
 					_hud.updateHUD(paperScrap1);
 				}
-				else if(C._name == "trash bin"){
+				else if(C._name == "trash"){
 					paperScrap2 = new Entity(0, 0, AssetPaths.CipherKey2__png, 60, 60, "int", "cipherScraps");
 					_hud.updateHUD(paperScrap2);
 				}
-				else if(C._name == "filing cabinet"){
+				else if(C._name == "cabinet"){
 					paperScrap3 = new Entity(0, 0, AssetPaths.CipherKey3__png, 60, 60, "int", "cipherScraps");
 					_hud.updateHUD(paperScrap3);
 				}
-				else if(C._name == "sticky note"){
+				else if(C._name == "note"){
 					num1 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
-					_hud.updateHUD(key1);
+					_hud.updateHUD(num1);
 				}
 				else if(C._name == "computer"){
 					num2 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
 					_hud.updateHUD(num2);
 				}
-				else if(C._name == "books"){
+				else if(C._name == "shelf"){
 					num3 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
 					_hud.updateHUD(num3);
 				}
@@ -272,9 +277,20 @@ class PlayState extends FlxState
 					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
 					_hud.updateHUD(key1);
 				}
-				else if(C._name == "plant"){
+				else if(C._name == "plant2"){
 					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
 					_hud.updateHUD(key1);
+					key1B=true;
+				}else if(C._name == "paint"){
+					if(paint==1){
+						C.x-=22;
+						_safe.visible=true;
+						C.height-=20;
+						_safe.height+=20;
+					}else{
+						_examineHud.init(P,C);
+					}
+					paint++;
 				}																								
 				else{
 					_examineHud.init(P,C);

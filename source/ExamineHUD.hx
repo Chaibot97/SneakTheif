@@ -29,7 +29,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var _spr:FlxSprite;
 	var _text:FlxText;
 	var _dialog:Dialog;
-
+	var _sprSafe:FlxSprite;
+	var safe:Bool;
 	var _invGraphics:FlxTypedGroup<Entity>;
 	public function new() 
 	{
@@ -55,7 +56,21 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_spr.screenCenter();
 		add(_spr);
 		add(_text);
-		
+
+		_sprSafe=new FlxSprite();
+		_sprSafe.loadGraphic(AssetPaths.SafeBig__png, true,112,112);
+		_sprSafe.animation.add("1", [1, 0], 6, false);
+		_sprSafe.animation.add("2", [2, 0], 6, false);
+		_sprSafe.animation.add("3", [3, 0], 6, false);
+		_sprSafe.animation.add("4", [4, 0], 6, false);
+		_sprSafe.animation.add("5", [5, 0], 6, false);
+		_sprSafe.animation.add("6", [6, 0], 6, false);
+		_sprSafe.animation.add("7", [7, 0], 6, false);
+		_sprSafe.animation.add("8", [8, 0], 6, false);
+		_sprSafe.animation.add("9", [9, 0], 6, false);
+		_sprSafe.animation.add("0", [10, 0], 6, false);
+		_sprSafe.animation.add("open", [11], 6, false);
+		safe=false;
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set();
@@ -69,9 +84,17 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	public function init(P:Player, ?C:Entity = null, ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
+
 		if(_dialog.lines.exists(C._name)){
 			_text.text=new Dialog().lines.get(C._name)[0];
-			_spr.loadGraphic(AssetPaths.LivingRoomWallsWriting__png, false);
+			if(C._name=="writing"){
+				_spr.loadGraphic(AssetPaths.LivingRoomWallsWriting__png, false);
+			}else if(C._name=="safe"){
+				_spr.loadGraphicFromSprite(_sprSafe);
+				safe=true;
+			}else{
+				_spr.loadGraphicFromSprite(C);
+			}
 		}
 		else if(invPop){
 			_invGraphics = choiceInv; 
@@ -117,12 +140,36 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	override public function update(elapsed:Float):Void 
 	{
-		if(FlxG.keys.anyJustReleased([J,ONE,TWO,THREE])){
+		
+		if(safe){
+			if(FlxG.keys.justReleased.ONE){
+				_sprSafe.animation.play("1");
+				FlxG.switchState(new OverState());
+			}else if(FlxG.keys.justReleased.TWO){
+
+			}else if(FlxG.keys.justReleased.THREE){
+
+			}else if(FlxG.keys.justReleased.ONE){
+
+			}else if(FlxG.keys.justReleased.ONE){
+
+			}else if(FlxG.keys.justReleased.ONE){
+
+			}else if(FlxG.keys.justReleased.ONE){
+
+			}
+			if(FlxG.keys.anyJustReleased([J])){
 			active = false;
 			visible = false;
 			_player.active=true;
+			}
+		}else{
+			if(FlxG.keys.anyJustReleased([J,ONE,TWO,THREE])){
+			active = false;
+			visible = false;
+			_player.active=true;
+			}
 		}
-
 		super.update(elapsed);
 
 	}

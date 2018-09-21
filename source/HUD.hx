@@ -92,7 +92,6 @@ class HUD extends FlxTypedGroup<FlxSprite>
 
 	public function updateHUD(?newItem:Entity = null):Void
 	{
-
 		switch newItem._name{
 			case "lockKeys": lockKeysCount++; 
 							 lkList.add(newItem);

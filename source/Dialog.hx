@@ -24,8 +24,9 @@ class Dialog
         "Comfy Chairs" => ["I could sit on something like this forever."],
         "Side Table" => ["Looks like something was left here…"],
         "Potted Plant 2" => ["Looks like you could use a little water buddy."],
-        "writing" => ["Now who would write on a perfectly good wall?"]
-
+        "writing" => ["Now who would write on a perfectly good wall?"],
+        "paint" => ["Looks like it can be moved..."],
+        "safe" => ["It requires a 4 digits code."]
         
     ];
 

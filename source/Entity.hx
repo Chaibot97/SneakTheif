@@ -11,7 +11,7 @@ class Entity extends FlxSprite
 	public var _name:String; 
 	public var _eType:String; 
 	public var _forHUD:Bool; 
-	public var hudGraphicAsset:FlxGraphicAsset; 
+	public var hudGraphicAsset:FlxGraphicAsset;
 	public function new(X:Float=0, Y:Float=0, ?hudGraphic:FlxGraphicAsset = null, ?hudItem:Bool = false, W:Int=0, H:Int=0, ?eType:String, ?name:String = "null") 
 	{
 		super(X, Y);
@@ -53,6 +53,7 @@ class Entity extends FlxSprite
 				height+=10;
 			}else if(name=="desk"){
 				loadGraphic(AssetPaths.Desk__png, false,W,H);
+				offset.set(0,-5);
 			}else if(name=="cabinet"){
 				loadGraphic(AssetPaths.Cabinet__png, false,W,H);
 			}else if(name=="shelf"){
@@ -63,12 +64,23 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.WasteBasket__png, false,W,H);
 			}else if(name=="printer"){
 				loadGraphic(AssetPaths.Printer__png, false,W,H);
+				offset.set(0,-10);
 			}else if(name=="note"){
 				loadGraphic(AssetPaths.StickyNote__png, false,W,H);
+				offset.set(0,-10);
+				height+=10;
+				width+=10;
 			}else if(name=="laptop"){
-				loadGraphic(AssetPaths.Laptop__png, false,W,H);
+				loadGraphic(AssetPaths.LaptopOn__png, false,W,H);
 			}else if(name=="paper"){
 				loadGraphic(AssetPaths.Paper__png, false,W,H);
+				height+=10;
+				width+=10;
+			}else if(name=="safe"){
+				loadGraphic(AssetPaths.Safe__png, false,W,H);
+				visible=false;
+			}else if(name=="plant2"){
+				loadGraphic(AssetPaths.Plant2__png, false,W,H);
 			}else
 			{
 				loadGraphic(hudGraphicAsset, false, 8, 8);
