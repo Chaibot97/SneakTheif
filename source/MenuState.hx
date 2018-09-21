@@ -6,6 +6,10 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
+import flixel.FlxSprite;
+import flixel.FlxObject;
+import flixel.math.FlxPoint;
+
 #if desktop
 import flash.system.System;
 #end
@@ -15,6 +19,7 @@ class MenuState extends FlxState
 	var _txtTitle:FlxText;
 	var _btnOptions:FlxButton;
 	var _btnPlay:FlxButton;
+	var _spr:FlxSprite;
 	#if desktop
 	var _btnExit:FlxButton;
 	#end
@@ -30,22 +35,26 @@ class MenuState extends FlxState
 		// 	#end
 		// }
 		
-		_txtTitle = new FlxText(0, 20, 0, "TBD", 22);
+		_txtTitle = new FlxText(0, 20, 0, "Sneak Thief", 22);
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
 		
 		_btnPlay = new FlxButton(0, 0, "Play", clickPlay);
-		_btnPlay.x = (FlxG.width / 2) - _btnPlay.width - 10;
+		_btnPlay.screenCenter();
 		_btnPlay.y = FlxG.height - _btnPlay.height - 10;
 		// _btnPlay.onUp.sound = FlxG.sound.load(AssetPaths.select__wav);
 		add(_btnPlay);
-		
-		_btnOptions = new FlxButton(0, 0, "Options", clickOptions);
-		_btnOptions.x = (FlxG.width / 2) + 10;
-		_btnOptions.y = FlxG.height - _btnOptions.height - 10;
-		// _btnOptions.onUp.sound = FlxG.sound.load(AssetPaths.select__wav);
-		add(_btnOptions);
+
+		_spr=new FlxSprite();
+		_spr.loadGraphic(AssetPaths.GD_P1_Sprite__png, true, 16, 30);
+		_spr.animation.add("walk", [0, 1, 2, 3], 6, true);
+		_spr.animation.play("walk");
+		_spr.setGraphicSize(40);
+		_spr.screenCenter();
+		add(_spr);
+
+
 		
 		#if desktop
 		_btnExit = new FlxButton(FlxG.width - 28, 8, "X", function()

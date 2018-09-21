@@ -209,6 +209,10 @@ class PlayState extends FlxState
 					FlxG.camera.fade(FlxColor.BLACK, .66, true);
 					P.x=550; 
 					P.y=230;
+				}else if(C._name=="door2"){
+					FlxG.camera.fade(FlxColor.BLACK, .66, true);
+					P.x=272; 
+					P.y=160;
 				}else{
 					_examineHud.init(P,C);
 					C.kill();
