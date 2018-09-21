@@ -50,23 +50,25 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 
-		lockKeys = new Entity(10, 20, AssetPaths.health__png, true);
-		lkText = new FlxText(20, 10, 40, "0" , 8);
+		lockKeys = new Entity(19, 29, AssetPaths.GD_OfficeDoorKey__png, true);
+		lkText = new FlxText(23, 16, 40, "0" , 8);
 		lkList = new FlxTypedGroup<Entity>(); 
+		lockKeys.scale.set(1.2, 1.2);
 
-		cipherScraps = new Entity(30,20, AssetPaths.GD_Paper__png, true);
-		csText = new FlxText(35, 10, 40, "0" , 8);
+		cipherScraps = new Entity(36,27, AssetPaths.GD_InvKeyScraps__png, true);
+		csText = new FlxText(55, 16, 40, "0" , 8);
 		csList = new FlxTypedGroup<Entity>(); 
+		cipherScraps.scale.set(.5,.7);
 
-		numberScraps = new Entity(45,20, AssetPaths.coin__png, true);
-		nsText = new FlxText(55, 10, 40, "0", 8);
+		numberScraps = new Entity(80,30, AssetPaths.GD_StickyNote__png, true);
+		nsText = new FlxText(83, 16, 40, "0", 8);
 		nsList = new FlxTypedGroup<Entity>(); 
+		numberScraps.scale.set(3.2,3.2);
 
 		var bgclr=FlxColor.CYAN;
 		bgclr.alphaFloat=0.2;
-		backGraphic = new FlxSprite().makeGraphic(FlxG.width, 30,bgclr) ;
-		backGraphic.x = 0; 
-		backGraphic.y = 0; 
+		backGraphic = new FlxSprite(5, 15, AssetPaths.newInv__png);
+		backGraphic.scale.set(1,1);
 
 
 		//add(_examineHud);
@@ -99,7 +101,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 							 	csList.add(newItem);
 								csText.text = "" + cipherScrapsCount;
 
-			case "coin": numberScrapsCount++; 
+			case "numScraps": numberScrapsCount++; 
 							 nsList.add(newItem);
 							 nsText.text = "" + numberScrapsCount;
 			default: trace("nothing");
