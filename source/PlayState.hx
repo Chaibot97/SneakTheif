@@ -93,7 +93,7 @@ class PlayState extends FlxState
 		_mFloor.setTileProperties(3, FlxObject.NONE);
 		_mFloor.setTileProperties(4, FlxObject.ANY);
 		add(_mFloor);
-		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
+		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWall__png, 16, 16, "walls");
 
 		add(_mWalls);
 		
@@ -134,7 +134,6 @@ class PlayState extends FlxState
 		add(infoText);
 		_map.loadEntities(placeEntities, "entities");
 
-
 		super.create();
 	}
 	
@@ -146,6 +145,7 @@ class PlayState extends FlxState
 		var h:Int = Std.parseInt(entityData.get("h"));
 		var etype:String =entityData.get("etype");
 		var collide:String =entityData.get("collide");
+		var act:String =entityData.get("act");
 
 		// var tempEnt:Entity = new Entity(x,y, etype,entityName); 
 
@@ -157,7 +157,8 @@ class PlayState extends FlxState
 		else if(collide=="t")
 		{
 			_grpCEntities.add(new Entity(x, y,w,h, etype,entityName));
-			_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
+			if(act!="f")
+				_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
 		}else
 		{
 			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
@@ -258,6 +259,11 @@ class PlayState extends FlxState
 					_hud.add(key1);
 				}																								
 				else{
+					FlxG.camera.fade(FlxColor.BLACK, 1, true);
+					P.x=273; 
+					P.y=160;
+				}else{
+				}else if(C._name=="door2"){
 					_examineHud.init(P,C);
 					C.kill();
 				}

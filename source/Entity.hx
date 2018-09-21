@@ -35,7 +35,7 @@ class Entity extends FlxSprite
 			}else if(name=="ctable"){
 				loadGraphic(AssetPaths.LivingRoomCoffee__png, false,W,H);
 			}else if(name=="plant"){
-				loadGraphic(AssetPaths.LivingRoomPottedPlant__png, false,W,H);
+				loadGraphic(AssetPaths.LivingRoomPlant__png, false,W,H);
 			}else if(name=="lamp"){
 				loadGraphic(AssetPaths.LivingRoomStandingLamp__png, false,W,H);
 			}else if(name=="couchm"){
@@ -48,10 +48,33 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.LivingRoomTV__png, false,W,H);
 			}else if(_forHUD){
 				loadGraphic(hudGraphicAsset, false, 8, 8); 
+			}else if(name=="paint"){
+				loadGraphic(AssetPaths.SantaFramed__png, false,W,H);
+				height+=10;
+			}else if(name=="desk"){
+				loadGraphic(AssetPaths.Desk__png, false,W,H);
+			}else if(name=="cabinet"){
+				loadGraphic(AssetPaths.Cabinet__png, false,W,H);
+			}else if(name=="shelf"){
+				loadGraphic(AssetPaths.Bookshelf__png, false,W,H);
+			}else if(name=="door2"){
+				loadGraphic(AssetPaths.Door__png, false,W,H);
+			}else if(name=="trash"){
+				loadGraphic(AssetPaths.WasteBasket__png, false,W,H);
+			}else if(name=="printer"){
+				loadGraphic(AssetPaths.Printer__png, false,W,H);
+			}else if(name=="note"){
+				loadGraphic(AssetPaths.StickyNote__png, false,W,H);
+			}else if(name=="laptop"){
+				loadGraphic(AssetPaths.Laptop__png, false,W,H);
+			}else if(name=="paper"){
+				loadGraphic(AssetPaths.Paper__png, false,W,H);
 			}else
 			{
 				loadGraphic(hudGraphicAsset, false, 8, 8);
 			}
+			
+
 		}
 	}
 

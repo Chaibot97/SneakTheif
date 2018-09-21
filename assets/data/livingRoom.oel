@@ -64,18 +64,31 @@
 -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 </walls>
   <entities>
-    <player id="0" x="272" y="160" />
-    <rug id="1" x="170" y="218" w="25" h="25" etype="fixed" collide="f"/>
-    <ctable id="2" x="100" y="200" w="25" h="28" etype="fixed" collide="t"/>
-    <couchm id="3" x="166" y="186" w="30" h="25" etype="fixed" collide="t"/>
-    <couchl id="4" x="136" y="210" w="25" h="25" etype="fixed" collide="t"/>
-    <couchr id="5" x="213" y="210" w="25" h="25" etype="fixed" collide="t"/>
-    <tv id="6" x="177" y="290" w="25" h="28" etype="fixed" collide="t"/>
+    <player id="0" x="272" y="160" />   
+    <rug id="1" x="120" y="205" w="25" h="25" etype="fixed" collide="f"/>
+    <ctable id="2" x="170" y="223" w="25" h="28" etype="fixed" collide="t"/>
+    <couchm id="3" x="165" y="195" w="30" h="25" etype="fixed" collide="t"/>
+    <couchl id="4" x="110" y="220" w="25" h="25" etype="fixed" collide="t"/>
+    <couchr id="5" x="235" y="220" w="25" h="25" etype="fixed" collide="t"/>
+    <tv id="6" x="162" y="272" w="25" h="28" etype="fixed" collide="t"/>
 
-    <plant id="7" x="70" y="262" w="25" h="25" etype="fixed" collide="t" />
     <lamp id="8" x="285" y="265" w="25" h="25" etype="fixed" collide="t"/>
+    <plant id="7" x="70" y="262" w="25" h="25" etype="fixed" collide="t" />
+    
+
 
     <writing id="9" x="90" y="130" w="100" h="30" etype="hitbox" collide="f"/>
     <door id="10" x="280" y="130" w="30" h="30" etype="hitbox" collide="f"/>
+
+    <paint id="11" x="510" y="120" w="30" h="50" etype="fixed" collide="f"/>
+    <desk id="11" x="485" y="190" w="30" h="50" etype="fixed" collide="t" act="f"/>
+    <cabinet id="11" x="448" y="140" w="20" h="25" etype="fixed" collide="t"/>
+    <shelf id="11" x="550" y="180" w="30" h="25" etype="fixed" collide="t"/>
+    <door2 id="10" x="525" y="268" w="30" h="30" etype="fixed" collide="f"/>
+    <trash id="11" x="475" y="200" w="10" h="10" etype="fixed" collide="t"/>
+    <printer id="11" x="450" y="248" w="30" h="25" etype="fixed" collide="t"/>
+    <note id="11" x="515" y="191" w="30" h="25" etype="pick" collide="t"/>
+    <paper id="11" x="515" y="200" w="30" h="25" etype="pick" collide="t"/>
+
   </entities>
 </level>
