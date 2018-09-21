@@ -52,7 +52,7 @@ class PlayState extends FlxState
 	var _ending:Bool;
 	var _won:Bool;
 	var _paused:Bool;
-	var infoText:FlxText;
+	public var infoText:FlxText;
 	var filters:Array<BitmapFilter> = [];
 	var _dialog:Dialog=new Dialog();
 	var _exed:Bool=false;

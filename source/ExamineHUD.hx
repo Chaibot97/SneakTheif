@@ -38,6 +38,12 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var c2:FlxSprite;
 	var c3:FlxSprite;
 	var c4:FlxSprite;
+	var n1:FlxSprite;
+	var n2:FlxSprite;
+	var n3:FlxSprite;
+	var n4:FlxSprite;
+	var k1:FlxSprite;
+	var k2:FlxSprite;
 	
 	public function new(dialog:Dialog,PS:PlayState) 
 	{
@@ -73,6 +79,24 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		add(c2);
 		add(c3);
 		add(c4);
+		n1=new FlxSprite(_sprBack.x , _sprBack.y -10, AssetPaths.numScrap1__png);
+		n2=new FlxSprite(_sprBack.x +30, _sprBack.y-10, AssetPaths.numScrap2__png);
+		n3=new FlxSprite(_sprBack.x +60, _sprBack.y-10, AssetPaths.numScrap3__png);
+		n4=new FlxSprite(_sprBack.x +90, _sprBack.y-10, AssetPaths.numScrap4__png);
+		n1.setGraphicSize(25,25);
+		n2.setGraphicSize(25,25);
+		n3.setGraphicSize(25,25);
+		n4.setGraphicSize(25,25);
+		add(n1);
+		add(n2);
+		add(n3);
+		add(n4);
+		k1=new FlxSprite(_sprBack.x +60, _sprBack.y +30, AssetPaths.GD_OfficeDoorKey__png);
+		k2=new FlxSprite(_sprBack.x +120, _sprBack.y +30, AssetPaths.GD_CabinetKey__png);
+		k1.setGraphicSize(25);
+		k2.setGraphicSize(25);
+		add(k1);
+		add(k2);
 
 		code=new FlxText(_sprBack.x +112, _sprBack.y-30, 0, "    ", 8);
 		add(code);
@@ -109,23 +133,57 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		c2.visible=false;
 		c3.visible=false;
 		c4.visible=false;
+		n1.visible=false;
+		n2.visible=false;
+		n3.visible=false;
+		n4.visible=false;
+		k1.visible=false;
+		k2.visible=false;
 		code.visible=false;
 		code.text="";
-		if(_dialog.lines.exists(C._name)){
-			_text.text=_dialog.lines.get(C._name)[0];
-			if(cls=="code"){
-				trace("x");
+		if(cls=="code"){
 				_spr.visible=false;
+				_text.text="Paper Scraps";
 				if(_ps.hasCode1){
 					c1.visible=true;
-				}else if(_ps.hasCode2){
+				}
+				if(_ps.hasCode2){
 					c2.visible=true;
-				}else if(_ps.hasCode3){
+				}
+				if(_ps.hasCode3){
 					c3.visible=true;
-				}else if(_ps.hasCode4){
+				}
+				if(_ps.hasCode4){
 					c4.visible=true;
 				}
-			}else if(_dialog.lines.get(C._name).length>1&&C._name!="cabinet"){
+		}else if(cls=="num"){
+				_spr.visible=false;
+				_text.text="Number Scripts";
+				if(_ps.hasNum1){
+					n1.visible=true;
+				}
+				if(_ps.hasNum2){
+					n2.visible=true;
+				}
+				if(_ps.hasNum3){
+					n3.visible=true;
+				}
+				if(_ps.hasNum4){
+					n4.visible=true;
+				}
+		}else if(cls=="key"){
+				_spr.visible=false;
+				_text.text="Keys";
+				if(_ps.hasKey1){
+					k1.visible=true;
+				}
+				if(_ps.hasKey2){
+					k2.visible=true;
+				}
+		}else if(_dialog.lines.exists(C._name)){
+			_text.text=_dialog.lines.get(C._name)[0];
+			
+			if(_dialog.lines.get(C._name).length>1&&C._name!="cabinet"){
 				_dialog.lines.get(C._name).shift();
 			}
 			if(C._name=="writing"){
