@@ -37,6 +37,7 @@ class PlayState extends FlxState
 	var _mFloor:FlxTilemap;
 	var _mWalls:FlxTilemap;
 
+	var _grpDeco:FlxTypedGroup<Entity>;
 	var _grpEntities:FlxTypedGroup<Entity>;
 	var _grpCEntities:FlxTypedGroup<Entity>;
 	var _grpHitBoxes:FlxTypedGroup<Entity>;
@@ -83,10 +84,13 @@ class PlayState extends FlxState
 
 		add(_mWalls);
 		
-		_grpEntities = new FlxTypedGroup<Entity>();
-		add(_grpEntities);
+		_grpDeco=new FlxTypedGroup<Entity>();
+		add(_grpDeco);
 		_grpCEntities = new FlxTypedGroup<Entity>();
 		add(_grpCEntities);
+		_grpEntities = new FlxTypedGroup<Entity>();
+		add(_grpEntities);
+		
 		_grpHitBoxes = new FlxTypedGroup<Entity>();
 		add(_grpHitBoxes);
 
@@ -147,8 +151,11 @@ class PlayState extends FlxState
 				_grpHitBoxes.add(new Entity(x, y,w,h, "hitbox",entityName));
 		}else
 		{
-			_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
-		}
+			if(act!="f")
+				_grpEntities.add(new Entity(x, y,w,h, etype,entityName));
+			else
+				_grpDeco.add(new Entity(x, y,w,h, etype,entityName));
+		}	
 	}
 
 
@@ -208,11 +215,11 @@ class PlayState extends FlxState
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
 					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=550; 
-					P.y=240;
+					P.x=530; 
+					P.y=270;
 				}else if(C._name=="door2"){
 					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=273; 
+					P.x=220; 
 					P.y=160;
 				}else{
 					_examineHud.init(P,C);
