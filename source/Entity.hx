@@ -59,6 +59,16 @@ class Entity extends FlxSprite
 				loadGraphic(AssetPaths.Bookshelf__png, false,W,H);
 			}else if(name=="door2"){
 				loadGraphic(AssetPaths.Door__png, false,W,H);
+			}else if(name=="trash"){
+				loadGraphic(AssetPaths.WasteBasket__png, false,W,H);
+			}else if(name=="printer"){
+				loadGraphic(AssetPaths.Printer__png, false,W,H);
+			}else if(name=="note"){
+				loadGraphic(AssetPaths.StickyNote__png, false,W,H);
+			}else if(name=="laptop"){
+				loadGraphic(AssetPaths.Laptop__png, false,W,H);
+			}else if(name=="paper"){
+				loadGraphic(AssetPaths.Paper__png, false,W,H);
 			}else
 			{
 				loadGraphic(hudGraphicAsset, false, 8, 8);
