@@ -66,6 +66,8 @@ class PlayState extends FlxState
 	var key1:Entity;
 	var key2:Entity;
 
+	var hasKey1:Bool = false;
+	var hasKey2:Bool = false;
 
 
 
@@ -221,7 +223,7 @@ class PlayState extends FlxState
 				});
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
-				if(C._name=="door"){
+				if(C._name=="door" && hasKey1){
 					//if(_hud.hasDoorKey()){
 						
 					
@@ -236,42 +238,55 @@ class PlayState extends FlxState
 						P.y=160;
 				}
 				
-				else if(C._name == "printer"){
-					paperScrap1 = new Entity(0, 0, AssetPaths.CipherKey1__png, 60, 60, "int", "cipherScraps");
-					trace("hi");
-					_hud.updateHUD(paperScrap1);
-				}
-				else if(C._name == "trash bin"){
-					paperScrap2 = new Entity(0, 0, AssetPaths.CipherKey2__png, 60, 60, "int", "cipherScraps");
-					_hud.updateHUD(paperScrap2);
-				}
-				else if(C._name == "filing cabinet"){
-					paperScrap3 = new Entity(0, 0, AssetPaths.CipherKey3__png, 60, 60, "int", "cipherScraps");
-					_hud.updateHUD(paperScrap3);
-				}
-				else if(C._name == "sticky note"){
-					num1 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
-					_hud.updateHUD(key1);
-				}
-				else if(C._name == "computer"){
-					num2 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
-					_hud.updateHUD(num2);
-				}
-				else if(C._name == "books"){
-					num3 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
-					_hud.updateHUD(num3);
-				}
-				else if(C._name == "rug"){
-					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
-					_hud.updateHUD(key1);
-				}
-				else if(C._name == "plant"){
-					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
-					_hud.updateHUD(key1);
-				}																								
-				else{
-					_examineHud.init(P,C);
-					C.kill(); 
+				if(C.inRoom){
+					if(C._name == "printer"){
+						paperScrap1 = new Entity(0, 0, AssetPaths.CipherKey1__png, 60, 60, "int", "cipherScraps");
+						trace("hi");
+						_hud.updateHUD(paperScrap1);
+						C.inRoom = false;
+					}
+					else if(C._name == "trash bin"){
+						paperScrap2 = new Entity(0, 0, AssetPaths.CipherKey2__png, 60, 60, "int", "cipherScraps");
+						_hud.updateHUD(paperScrap2);
+						C.inRoom = false;
+					}
+					else if(C._name == "filing cabinet"){
+						paperScrap3 = new Entity(0, 0, AssetPaths.CipherKey3__png, 60, 60, "int", "cipherScraps");
+						_hud.updateHUD(paperScrap3);
+						C.inRoom = false;
+					}
+					else if(C._name == "sticky note"){
+						num1 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
+						_hud.updateHUD(key1);
+						C.inRoom = false;
+					}
+					else if(C._name == "computer"){
+						num2 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
+						_hud.updateHUD(num2);
+						C.inRoom = false;
+					}
+					else if(C._name == "books"){
+						num3 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
+						_hud.updateHUD(num3);
+						C.inRoom = false;
+					}
+					else if(C._name == "rug"){
+						key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
+						_hud.updateHUD(key1);
+						C.inRoom = false;
+						hasKey1 = true;
+					}
+					else if(C._name == "plant"){
+						key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
+						_hud.updateHUD(key1);
+						C.inRoom = false;
+						hasKey2 = true;
+					}																								
+					else{
+						_examineHud.init(P,C);
+						C.kill(); 
+						C.inRoom = false;
+					}
 				}
 				infoText.visible=false;
 				_exed=true;
