@@ -76,6 +76,8 @@ class PlayState extends FlxState
 		_mFloor.follow();
 		_mFloor.setTileProperties(1, FlxObject.NONE);
 		_mFloor.setTileProperties(2, FlxObject.ANY);
+		_mFloor.setTileProperties(3, FlxObject.NONE);
+		_mFloor.setTileProperties(4, FlxObject.ANY);
 		add(_mFloor);
 		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
 
@@ -205,8 +207,8 @@ class PlayState extends FlxState
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
 					FlxG.camera.fade(FlxColor.BLACK, .66, true);
-					P.x=170; 
-					P.y=218;
+					P.x=550; 
+					P.y=230;
 				}else{
 					_examineHud.init(P,C);
 					C.kill();
