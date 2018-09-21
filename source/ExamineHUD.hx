@@ -30,6 +30,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var _text:FlxText;
 	var _dialog:Dialog;
 
+	var _invGraphics:FlxTypedGroup<Entity>;
 	public function new() 
 	{
 		super();
@@ -66,12 +67,17 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	}
 	
 	
-	public function init(P:Player,C:Entity):Void
+	public function init(P:Player, ?C:Entity = null, ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
 		if(_dialog.lines.exists(C._name)){
 			_text.text=new Dialog().lines.get(C._name)[0];
 			_spr.loadGraphic(AssetPaths.LivingRoomWallsWriting__png, false);
-		}else{
+		}
+		else if(invPop){
+			_invGraphics = choiceInv; 
+			_text.text = _invGraphics.members[0]._name; 
+		}
+		else{
 			_spr.loadGraphicFromSprite(C);
 			_text.text=C._name;
 		}
@@ -95,6 +101,10 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		{
 			spr.alpha = _alpha;
 		});
+		_invGraphics.forEach(function(spr:Entity)
+		{
+			spr.alpha = _alpha;
+		});
 	}
 	
 	/**
@@ -110,7 +120,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	override public function update(elapsed:Float):Void 
 	{
-		if(FlxG.keys.anyJustReleased([J])){
+		if(FlxG.keys.anyJustReleased([J,ONE,TWO,THREE])){
 			active = false;
 			visible = false;
 			_player.active=true;

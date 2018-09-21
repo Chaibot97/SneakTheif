@@ -56,6 +56,20 @@ class PlayState extends FlxState
 	var filters:Array<BitmapFilter> = [];
 	var _dialog:Dialog=new Dialog();
 	var _exed:Bool=false;
+
+	//Items that we can pick up
+	var num1:Entity; 
+	var num2:Entity;
+	var num3:Entity;
+	var paperScrap1:Entity;
+	var paperScrap2:Entity;
+	var paperScrap3:Entity;
+	var key1:Entity;
+	var key2:Entity;
+
+
+
+
 	#if mobile
 	public static var virtualPad:FlxVirtualPad;
 	#end
@@ -194,6 +208,7 @@ class PlayState extends FlxState
 			trace(_player.x);
 			trace(_player.y);
 		}
+		_hud.checkKeyPress(_examineHud, _player);
 	}
 
 	
@@ -214,14 +229,52 @@ class PlayState extends FlxState
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
+					//if(_hud.hasDoorKey()){
+						
+					
+						FlxG.camera.fade(FlxColor.BLACK, .66, true);
+						P.x=550; 
+						P.y=230;
+					//}
+				}
+				else if(C._name == "printer"){
+					key1 = new Entity(0, 0, AssetPaths.CipherKey1__png, 60, 60, "int", "cipherScraps");
+					_hud.add(key1);
+				}
+				else if(C._name == "trash bin"){
+					key1 = new Entity(0, 0, AssetPaths.CipherKey2__png, 60, 60, "int", "cipherScraps");
+					_hud.add(key1);
+				}
+				else if(C._name == "filing cabinet"){
+					key1 = new Entity(0, 0, AssetPaths.CipherKey3__png, 60, 60, "int", "cipherScraps");
+					_hud.add(key1);
+				}
+				else if(C._name == "sticky note"){
+					key1 = new Entity(0, 0, AssetPaths.numScrap1__png, 60, 60, "int", "numScraps");
+					_hud.add(key1);
+				}
+				else if(C._name == "books"){
+					key1 = new Entity(0, 0, AssetPaths.numScrap3__png, 60, 60, "int", "numScraps");
+					_hud.add(key1);
+				}
+				else if(C._name == "rug"){
+					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
+					_hud.add(key1);
+				}
+				else if(C._name == "plant"){
+					key1 = new Entity(0, 0, 10, 10, "int", "lockKeys");
+					_hud.add(key1);
+				}																								
+				else{
 					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=530; 
-					P.y=270;
+					P.x=550; 
+					P.y=240;
 				}else if(C._name=="door2"){
 					FlxG.camera.fade(FlxColor.BLACK, 1, true);
-					P.x=220; 
+					P.x=273; 
 					P.y=160;
 				}else{
+				}else if(C._name=="door2"){
 					_examineHud.init(P,C);
 					C.kill();
 				}
