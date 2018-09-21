@@ -35,7 +35,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	var nsText:FlxText;
 	var nsList:FlxTypedGroup<Entity>;
 	
-
+	var info:FlxText;
 	var time:Entity; 
 	var timeText:FlxText; 
 
@@ -51,17 +51,17 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		super();
 
 		lockKeys = new Entity(19, 29, AssetPaths.GD_OfficeDoorKey__png, true);
-		lkText = new FlxText(23, 16, 40, "0" , 8);
+		lkText = new FlxText(10, 16, 40, "Z   0" , 8);
 		lkList = new FlxTypedGroup<Entity>(); 
 		lockKeys.scale.set(1.2, 1.2);
 
 		cipherScraps = new Entity(36,27, AssetPaths.GD_InvKeyScraps__png, true);
-		csText = new FlxText(55, 16, 40, "0" , 8);
+		csText = new FlxText(37, 16, 40, "X   0" , 8);
 		csList = new FlxTypedGroup<Entity>(); 
 		cipherScraps.scale.set(.5,.7);
 
 		numberScraps = new Entity(80,30, AssetPaths.StickyNote__png, true);
-		nsText = new FlxText(83, 16, 40, "0", 8);
+		nsText = new FlxText(69, 16, 40, "C   0", 8);
 		nsList = new FlxTypedGroup<Entity>(); 
 		numberScraps.scale.set(3.2,3.2);
 
@@ -72,7 +72,6 @@ class HUD extends FlxTypedGroup<FlxSprite>
 
 
 		//add(_examineHud);
-
 		this.add(backGraphic);
 		this.add(lkText);
 		this.add(nsText);
@@ -95,29 +94,29 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		switch newItem._name{
 			case "lockKeys": lockKeysCount++; 
 							 lkList.add(newItem);
-							 lkText.text = "" + lockKeysCount;
+							 lkText.text = "z   " + lockKeysCount;
 			case "cipherScraps": cipherScrapsCount++; 
 							 	csList.add(newItem);
-								csText.text = "" + cipherScrapsCount;
+								csText.text = "x   " + cipherScrapsCount;
 
 			case "numScraps": numberScrapsCount++; 
 							 nsList.add(newItem);
-							 nsText.text = "" + numberScrapsCount;
+							 nsText.text = "c   " + numberScrapsCount;
 			default: trace("nothing");
 						
 		}
 	}
 
 	public function checkKeyPress(_examineHud:ExamineHUD, P:Player):Void{
-		if(FlxG.keys.justPressed.ONE){
+		if(FlxG.keys.justPressed.Z){
 			//Pop up Keys?
 			_examineHud.init(P,lockKeys);
 		}
-		else if(FlxG.keys.justPressed.TWO){
+		else if(FlxG.keys.justPressed.X){
 			//Pop up Cipher scraps
 			_examineHud.init(P,cipherScraps);
 		}
-		else if(FlxG.keys.justPressed.THREE){
+		else if(FlxG.keys.justPressed.C){
 			//Pop up Number Code scraps
 			_examineHud.init(P,numberScraps);
 		}

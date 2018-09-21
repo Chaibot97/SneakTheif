@@ -14,7 +14,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
-
+import flixel.util.FlxTimer;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -32,7 +32,9 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var _sprSafe:FlxSprite;
 	var safe:Bool;
 	var _invGraphics:FlxTypedGroup<Entity>;
-	public function new() 
+	var code:FlxText;
+	var _timer= new FlxTimer();
+	public function new(dialog:Dialog) 
 	{
 		super();
 		
@@ -48,7 +50,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_sprBack.screenCenter();
 		add(_sprBack);
 		
-		_dialog=new Dialog();
+		_dialog=dialog;
 		
 		_spr=new FlxSprite(_sprBack.x +90, _sprBack.y +40, AssetPaths.coin__png);
 		_text=new FlxText(_sprBack.x +90, _sprBack.y +70, 0, "some texts"+"                               ", 8);
@@ -57,9 +59,12 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		add(_spr);
 		add(_text);
 
+		code=new FlxText(_sprBack.x +112, _sprBack.y-30, 0, "    ", 8);
+		add(code);
+
 		_sprSafe=new FlxSprite();
 		_sprSafe.loadGraphic(AssetPaths.SafeBig__png, true,112,112);
-		_sprSafe.animation.add("1", [1, 0], 6, false);
+		_sprSafe.animation.add("1", [0,1, 0], 6, false);
 		_sprSafe.animation.add("2", [2, 0], 6, false);
 		_sprSafe.animation.add("3", [3, 0], 6, false);
 		_sprSafe.animation.add("4", [4, 0], 6, false);
@@ -84,13 +89,18 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	public function init(P:Player, ?C:Entity = null, ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
-
+		code.visible=false;
+		code.text="";
 		if(_dialog.lines.exists(C._name)){
-			_text.text=new Dialog().lines.get(C._name)[0];
+			_text.text=_dialog.lines.get(C._name)[0];
+			if(_dialog.lines.get(C._name).length>1&&C._name!="cabinate"){
+				_dialog.lines.get(C._name).shift();
+			}
 			if(C._name=="writing"){
 				_spr.loadGraphic(AssetPaths.LivingRoomWallsWriting__png, false);
 			}else if(C._name=="safe"){
 				_spr.loadGraphicFromSprite(_sprSafe);
+				code.visible=true;
 				safe=true;
 			}else{
 				_spr.loadGraphicFromSprite(C);
@@ -142,21 +152,48 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	{
 		
 		if(safe){
+
 			if(FlxG.keys.justReleased.ONE){
-				_sprSafe.animation.play("1");
-				FlxG.switchState(new OverState());
+				// _sprSafe.animation.play("1");
+				code.text+="1";
 			}else if(FlxG.keys.justReleased.TWO){
-
+				// _sprSafe.animation.play("2");
+				code.text+="2";
 			}else if(FlxG.keys.justReleased.THREE){
+				// _sprSafe.animation.play("3");
+				code.text+="3";
 
-			}else if(FlxG.keys.justReleased.ONE){
+			}else if(FlxG.keys.justReleased.FOUR){
+				// _sprSafe.animation.play("4");
+				code.text+="4";
 
-			}else if(FlxG.keys.justReleased.ONE){
+			}else if(FlxG.keys.justReleased.FIVE){
+				// _sprSafe.animation.play("5");
+				code.text+="5";
+			}else if(FlxG.keys.justReleased.SIX){
+				// _sprSafe.animation.play("6");
+				code.text+="6";
+			}else if(FlxG.keys.justReleased.SEVEN){
+				// _sprSafe.animation.play("7");
+				code.text+="7";
 
-			}else if(FlxG.keys.justReleased.ONE){
+			}else if(FlxG.keys.justReleased.EIGHT){
+				// _sprSafe.animation.play("8");
+				code.text+="8";
+			}else if(FlxG.keys.justReleased.NINE){
+				// _sprSafe.animation.play("9");
+				code.text+="9";
+			}else if(FlxG.keys.justReleased.ZERO){
+				// _sprSafe.animation.play("0");
+				code.text+="0";
+			}
+			super.update(elapsed);
 
-			}else if(FlxG.keys.justReleased.ONE){
-
+			if(code.text.length>=4){			
+				code.text="";
+				
+			}else if(code.text=="5216"){
+				FlxG.switchState(new OverState());
 			}
 			if(FlxG.keys.anyJustReleased([J])){
 			active = false;
@@ -164,13 +201,12 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			_player.active=true;
 			}
 		}else{
-			if(FlxG.keys.anyJustReleased([J,ONE,TWO,THREE])){
+			if(FlxG.keys.anyJustReleased([J])){
 			active = false;
 			visible = false;
 			_player.active=true;
 			}
 		}
-		super.update(elapsed);
 
 	}
 	

@@ -20,7 +20,7 @@ class MenuState extends FlxState
 	var _btnOptions:FlxButton;
 	var _btnPlay:FlxButton;
 	var _spr:FlxSprite;
-
+	var _info:FlxText;
 	
 	override public function create():Void
 	{
@@ -30,6 +30,8 @@ class MenuState extends FlxState
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
+
+		
 		
 		_btnPlay = new FlxButton(0, 0, "Enter", clickPlay);
 		_btnPlay.screenCenter();
@@ -39,13 +41,17 @@ class MenuState extends FlxState
 
 		_spr=new FlxSprite();
 		_spr.loadGraphic(AssetPaths.GD_P1_Sprite__png, true, 16, 30);
-		_spr.animation.add("walk", [0, 1, 2, 3], 6, true);
-		_spr.animation.play("walk");
+		_spr.animation.add("GO", [0, 1, 2, 3], 6, true);
+		_spr.animation.play("GO");
 		_spr.setGraphicSize(40);
 		_spr.screenCenter();
 		add(_spr);
 
-
+		_info = new FlxText(0, 20, 0, "Steal the Chalice", 15);
+		_info.y=_btnPlay.y-30;
+		_info.alignment = CENTER;
+		_info.screenCenter(FlxAxes.X);
+		add(_info);
 		
 		#if FLX_MOUSE
 		FlxG.mouse.visible = false;
@@ -61,11 +67,11 @@ class MenuState extends FlxState
 		if(FlxG.keys.anyJustReleased([ENTER])){
 			clickPlay();
 		}
-		_btnPlay.update(0);
+		super.update(elapsed);
 	}
 	function clickPlay():Void
 	{
-		FlxG.camera.fade(FlxColor.BLACK, .33, false, function()
+		FlxG.camera.fade(FlxColor.BLACK, .66, false, function()
 		{
 			FlxG.switchState(new PlayState());
 		});
