@@ -18,7 +18,7 @@ class Dialog
         "Safe" => ["Hello, what have we got here?","A key panel? Well that should make this interesting.", "Jackpot! I'm in!"],
         "Painting" => ["This isn’t really my taste.", "Huh? This painting seems crooked.", "Looks like something might be behind this…"],
         "Trash bin" => ["Now this paper looks like it might be worth something."],
-        "TV" => ["There's nothing good on at this time of day."],
+        "tv" => ["There's nothing good on at this time of day."],
         "Rug Lump" => ["Hey there’s something under here!"],
         "Couch" => ["I could sit on something like this forever.", "Aha! What's this in between the cushions?"],
         "Comfy Chairs" => ["I could sit on something like this forever."],

@@ -76,6 +76,8 @@ class PlayState extends FlxState
 		_mFloor.follow();
 		_mFloor.setTileProperties(1, FlxObject.NONE);
 		_mFloor.setTileProperties(2, FlxObject.ANY);
+		_mFloor.setTileProperties(3, FlxObject.NONE);
+		_mFloor.setTileProperties(4, FlxObject.ANY);
 		add(_mFloor);
 		_mWalls = _map.loadTilemap(AssetPaths.LivingRoomWalls__png, 16, 16, "walls");
 
@@ -96,8 +98,7 @@ class PlayState extends FlxState
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		_hud = new HUD();
-		// _hud.addDataBase(_uniqueEntities);
-		add(_hud);
+		// add(_hud);
 		
 		_examineHud = new ExamineHUD();
 		add(_examineHud);
@@ -115,7 +116,6 @@ class PlayState extends FlxState
 		infoText.setBorderStyle(OUTLINE);
 		infoText.visible=false;
 
-		displayHUD(_hud);//display HUD
 
 		add(infoText);
 		_map.loadEntities(placeEntities, "entities");
@@ -198,16 +198,25 @@ class PlayState extends FlxState
 			infoText.y = P.y-20 ;
 			infoText.x = P.x +12;
 			if(!_exed)infoText.visible=true;
+
+			
 			if(C._eType=="hitbox"){
 				_grpCEntities.forEach(function(spr:Entity){
 					if(spr._name==C._name) C=spr;
 				});
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
-				_examineHud.init(P,C);
-				C.kill();
+				if(C._name=="door"){
+					FlxG.camera.fade(FlxColor.BLACK, .66, true);
+					P.x=550; 
+					P.y=230;
+				}else{
+					_examineHud.init(P,C);
+					C.kill();
+				}
 				infoText.visible=false;
 				_exed=true;
+
 				trace(C._name);
 				
 			}
