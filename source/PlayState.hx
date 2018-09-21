@@ -52,10 +52,10 @@ class PlayState extends FlxState
 	var _ending:Bool;
 	var _won:Bool;
 	var _paused:Bool;
-	public var infoText:FlxText;
+	var infoText:FlxText;
 	var filters:Array<BitmapFilter> = [];
 	var _dialog:Dialog=new Dialog();
-	var _exed:Bool=false;
+	public var _exed:Bool=false;
 
 	//Items that we can pick up
 	var num1:Entity; 

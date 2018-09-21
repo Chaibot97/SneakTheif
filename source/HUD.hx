@@ -108,15 +108,15 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	}
 
 	public function checkKeyPress(_examineHud:ExamineHUD, P:Player):Void{
-		if(FlxG.keys.justPressed.Z){
+		if(FlxG.keys.anyJustPressed([Z])){
 			//Pop up Keys?
 			_examineHud.init(P,lockKeys,"key");
 		}
-		else if(FlxG.keys.justPressed.X){
+		else if(FlxG.keys.anyJustPressed([X])){
 			//Pop up Cipher scraps
 			_examineHud.init(P,cipherScraps,"code");
 		}
-		else if(FlxG.keys.justPressed.C){
+		else if(FlxG.keys.anyJustPressed([C])){
 			//Pop up Number Code scraps
 			_examineHud.init(P,numberScraps,"num");
 		}

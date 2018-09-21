@@ -44,6 +44,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	var n4:FlxSprite;
 	var k1:FlxSprite;
 	var k2:FlxSprite;
+
+
 	
 	public function new(dialog:Dialog,PS:PlayState) 
 	{
@@ -128,6 +130,8 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	public function init(P:Player, ?C:Entity = null, ?cls:String="", ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
+		_ps._exed=true;
+
 		_spr.visible=true;
 		c1.visible=false;
 		c2.visible=false;
@@ -211,7 +215,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_player=P;
 		_player.active=false;
 
-		FlxTween.num(0, 1, .33, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
+		FlxTween.num(0, 1, .01, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
 		visible = true;
 	}
 	
@@ -291,10 +295,11 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 			_player.active=true;
 			}
 		}else{
-			if(FlxG.keys.anyJustReleased([J])){
+			if(FlxG.keys.anyJustReleased([J,Z,X,C])){
 			active = false;
 			visible = false;
 			_player.active=true;
+			_ps._exed=false;
 			}
 		}
 		super.update(elapsed);
