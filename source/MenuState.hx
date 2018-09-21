@@ -57,7 +57,6 @@ class MenuState extends FlxState
 		FlxG.mouse.visible = false;
 		#end
 		
-		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		
 		super.create();
 	}

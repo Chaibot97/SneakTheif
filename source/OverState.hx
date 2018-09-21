@@ -44,7 +44,7 @@ class OverState extends FlxState
 		FlxG.mouse.visible = false;
 		#end
 		
-		FlxG.camera.fade(FlxColor.BLACK, .33, true);
+		FlxG.camera.fade(FlxColor.BLACK, 1, true);
 		
 		super.create();
 	}

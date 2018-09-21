@@ -130,7 +130,6 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 	
 	public function init(P:Player, ?C:Entity = null, ?cls:String="", ?invPop:Bool = false, ?choiceInv:FlxTypedGroup<Entity> = null):Void
 	{
-		_ps._exed=true;
 
 		_spr.visible=true;
 		c1.visible=false;
@@ -145,6 +144,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		k2.visible=false;
 		code.visible=false;
 		code.text="";
+		safe=false;
 		if(cls=="code"){
 				_spr.visible=false;
 				_text.text="Paper Scraps";
@@ -215,7 +215,7 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 		_player=P;
 		_player.active=false;
 
-		FlxTween.num(0, 1, .01, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
+		FlxTween.num(0, 1, .03, { ease: FlxEase.circOut, onComplete: finishFadeIn }, updateAlpha);
 		visible = true;
 	}
 	
@@ -287,21 +287,17 @@ class ExamineHUD extends FlxTypedGroup<FlxSprite>
 				code.text="";
 				
 			}else if(code.text=="5216"){
+				FlxG.camera.fade(FlxColor.BLACK, 1, true);
 				FlxG.switchState(new OverState());
 			}
-			if(FlxG.keys.anyJustReleased([J])){
-			active = false;
-			visible = false;
-			_player.active=true;
-			}
-		}else{
-			if(FlxG.keys.anyJustReleased([J,Z,X,C])){
-			active = false;
-			visible = false;
-			_player.active=true;
-			_ps._exed=false;
-			}
+
 		}
+		if(FlxG.keys.anyJustReleased([J,Z,X,C])){
+			active = false;
+			visible = false;
+			_player.active=true;
+		}
+		
 		super.update(elapsed);
 
 

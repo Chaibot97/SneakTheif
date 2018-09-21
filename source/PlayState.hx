@@ -250,12 +250,12 @@ class PlayState extends FlxState
 			}
 			if(FlxG.keys.anyJustReleased([J])&&!_exed){
 				if(C._name=="door"){
-					FlxG.camera.fade(FlxColor.BLACK, .66, true);
+					FlxG.camera.fade(FlxColor.BLACK, 1, true);
 					P.x=530; 
 					P.y=270;
 				}
 				else if(C._name=="door2"&&hasKey1){
-						FlxG.camera.fade(FlxColor.BLACK, .66, true);
+						FlxG.camera.fade(FlxColor.BLACK, 1, true);
 						P.x=220; 
 						P.y=160;
 				}else if(C._name == "paint"){
