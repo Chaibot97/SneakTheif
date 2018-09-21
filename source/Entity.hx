@@ -35,7 +35,7 @@ class Entity extends FlxSprite
 			}else if(name=="ctable"){
 				loadGraphic(AssetPaths.LivingRoomCoffee__png, false,W,H);
 			}else if(name=="plant"){
-				loadGraphic(AssetPaths.LivingRoomPottedPlant__png, false,W,H);
+				loadGraphic(AssetPaths.LivingRoomPlant__png, false,W,H);
 			}else if(name=="lamp"){
 				loadGraphic(AssetPaths.LivingRoomStandingLamp__png, false,W,H);
 			}else if(name=="couchm"){
