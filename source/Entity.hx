@@ -11,7 +11,8 @@ class Entity extends FlxSprite
 	public var _name:String; 
 	public var _eType:String; 
 	public var _forHUD:Bool; 
-	public var hudGraphicAsset:FlxGraphicAsset;
+	public var hudGraphicAsset:FlxGraphicAsset; 
+	public var inRoom:Bool = true;
 	public function new(X:Float=0, Y:Float=0, ?hudGraphic:FlxGraphicAsset = null, ?hudItem:Bool = false, W:Int=0, H:Int=0, ?eType:String, ?name:String = "null") 
 	{
 		super(X, Y);
